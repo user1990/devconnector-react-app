@@ -6,8 +6,8 @@ import User from '../models/User';
 import keys from '../config/keys_dev';
 
 // Validation middlewares
-import validateRegisterInput from '../middlewares/register';
-import validateLoginInput from '../middlewares/login';
+import validateRegisterInput from '../validation/register';
+import validateLoginInput from '../validation/login';
 
 export const registerUser = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
