@@ -5,12 +5,22 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import keys from '../config/keys_dev';
 
+// Validation middlewares
+import validateRegisterInput from '../middlewares/register';
+import validateLoginInput from '../middlewares/login';
+
 export const registerUser = (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
-      return res.status(400).json({
-        email: 'Email already exists',
-      });
+      errors.email = 'Email already exists';
+      return res.status(400).json(errors);
     }
     const avatar = gravatar.url(req.body.email, {
       s: '200', // Size
@@ -39,12 +49,20 @@ export const registerUser = (req, res) => {
 };
 
 export const loginUser = (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const { email, password } = req.body;
   // Find user by email
   User.findOne({ email }).then((user) => {
     // Check for user
     if (!user) {
-      return res.status(404).json({ email: 'User not found' });
+      errors.email = 'User not found';
+      return res.status(404).json(errors);
     }
 
     // Check password
@@ -65,7 +83,8 @@ export const loginUser = (req, res) => {
           });
         });
       } else {
-        return res.status(404).json({ password: 'Password incorrect' });
+        errors.password = 'Password incorrect';
+        return res.status(404).json(errors);
       }
     });
   });

@@ -2,8 +2,6 @@ import express from 'express';
 import passport from 'passport';
 
 import { registerUser, loginUser, currentUser } from '../../controllers/users';
-// import validateRegisterInput from '../../middlewares/register';
-// import validateLoginInput from '../../middlewares/login';
 
 const router = express.Router();
 
