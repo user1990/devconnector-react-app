@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb-base",
+  "plugins": [
+      "import"
+  ],
+  "rules": {
+      "linebreak-style": 0,
+      "no-console": 0,
+      "no-shadow": 0,
+      "global-require": 0
+  },
+  "env": {
+      "jest": true
+  }
+}
