@@ -3,15 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
-import keys from '../config/keys';
+import keys from '../config/keys_dev';
 
-export const users = (req, res) => {
-  res.json({
-    message: 'Users Works!',
-  });
-};
-
-export const userRegister = (req, res) => {
+export const registerUser = (req, res) => {
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       return res.status(400).json({
@@ -41,11 +35,10 @@ export const userRegister = (req, res) => {
           .catch(err => console.log(err));
       });
     });
-    return user;
   });
 };
 
-export const userLogin = (req, res) => {
+export const loginUser = (req, res) => {
   const { email, password } = req.body;
   // Find user by email
   User.findOne({ email }).then((user) => {
@@ -65,7 +58,7 @@ export const userLogin = (req, res) => {
         };
 
         // Sign token
-        jwt.sign(payload, keys.jwtSecret, { expiresIn: 3600 }, (err, token) => {
+        jwt.sign(payload, keys.JWT_SECRET, { expiresIn: 3600 }, (err, token) => {
           res.json({
             success: true,
             token: `Bearer ${token}`,
@@ -75,5 +68,13 @@ export const userLogin = (req, res) => {
         return res.status(404).json({ password: 'Password incorrect' });
       }
     });
+  });
+};
+
+export const currentUser = (req, res) => {
+  res.json({
+    id: req.user.id,
+    name: req.user.name,
+    email: req.user.email,
   });
 };
