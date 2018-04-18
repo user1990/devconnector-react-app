@@ -37,3 +37,9 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.navbar-avatar {
+  width: 2.5rem;
+  margin-right: 0.3rem;
+  border-radius: 50%;
+}
