@@ -1,6 +1,9 @@
 import Profile from '../models/Profile';
 import User from '../models/User';
+// Load validation
 import validateProfileInput from '../validation/profile';
+import validateExpierenceInput from '../validation/expierence';
+import validateEducationInput from '../validation/education';
 
 export const getCurrentProfile = (req, res) => {
   const errors = {};
@@ -14,6 +17,51 @@ export const getCurrentProfile = (req, res) => {
       res.json(profile);
     })
     .catch(err => res.status(404).json(err));
+};
+
+export const getProfileByHandle = (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ handle: req.params.handle })
+    .populate('User', ['name', 'avatar'])
+    .then((profile) => {
+      if (!profile) {
+        errors.noprofile = 'There is no profile for this user';
+        return res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json(err));
+};
+
+export const getProfileById = (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ handle: req.params.user_id })
+    .populate('User', ['name', 'avatar'])
+    .then((profile) => {
+      if (!profile) {
+        errors.noprofile = 'There is no profile for this user';
+        return res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.status(404).json({ err, profile: 'There is no profile for this user' }));
+};
+
+export const getAllProfiles = (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ handle: req.params.user_id })
+    .populate('User', ['name', 'avatar'])
+    .then((profiles) => {
+      if (!profiles) {
+        errors.noprofile = 'There are no profiles';
+        return res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
+    .catch(err => res.status(404).json({ err, profile: 'There is no profile for this user' }));
 };
 
 export const createUserProfile = (req, res) => {
@@ -79,5 +127,87 @@ export const createUserProfile = (req, res) => {
           new Profile(profileFields).save().then(profile => res.json(profile));
         });
     }
+  });
+};
+
+export const addExpierenceToProfile = (req, res) => {
+  const { errors, isValid } = validateExpierenceInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.status(404).json(errors);
+  }
+
+  Profile.findOne({ user: req.user.id }).then((profile) => {
+    const newExpierence = {
+      school: req.body.school,
+      degree: req.body.degree,
+      location: req.body.location,
+      from: req.body.from,
+      to: req.body.to,
+      current: req.body.current,
+      description: req.body.description,
+    };
+
+    // Add to expierence array
+    profile.expierence.unshift(newExpierence);
+    profile.save().then(profile => res.json(profile));
+  });
+};
+
+export const addEducationToProfile = (req, res) => {
+  const { errors, isValid } = validateEducationInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.status(404).json(errors);
+  }
+
+  Profile.findOne({ user: req.user.id }).then((profile) => {
+    const newEducation = {
+      school: req.body.school,
+      company: req.body.company,
+      fieldofstudy: req.body.fieldofstudy,
+      from: req.body.from,
+      to: req.body.to,
+      current: req.body.current,
+      description: req.body.description,
+    };
+
+    // Add to education array
+    profile.expierence.unshift(newEducation);
+    profile.save().then(profile => res.json(profile));
+  });
+};
+
+export const deleteExpierenceFromProfile = (req, res) => {
+  Profile.findOne({ user: req.user.id })
+    .then((profile) => {
+      // Get remove index
+      const removeIndex = profile.expierence.map(item => item.id).indexof(req.params.exp_id);
+      // Splice out of array
+      profile.expierence.splice(removeIndex, 1);
+      // Save
+      profile.save().then(profile => res.json(profile));
+    })
+    .catch(err => res.status(404).json(err));
+};
+
+export const deleteEducationFromProfile = (req, res) => {
+  Profile.findOne({ user: req.user.id })
+    .then((profile) => {
+      // Get remove index
+      const removeIndex = profile.education.map(item => item.id).indexof(req.params.edu_id);
+      // Splice out of array
+      profile.education.splice(removeIndex, 1);
+      // Save
+      profile.save().then(profile => res.json(profile));
+    })
+    .catch(err => res.status(404).json(err));
+};
+
+export const deleteUserAndProfile = (req, res) => {
+  Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+    User.findOneAndRemove({ _id: req.user.id }).then(() => res.json({ success: true }));
   });
 };
