@@ -7,9 +7,9 @@ import {
   getProfileById,
   getAllProfiles,
   createUserProfile,
-  addExpierenceToProfile,
+  addExperienceToProfile,
   addEducationToProfile,
-  deleteExpierenceFromProfile,
+  deleteExperienceFromProfile,
   deleteEducationFromProfile,
   deleteUserAndProfile,
 } from '../../controllers/profile';
@@ -41,13 +41,13 @@ router.get('/all', getAllProfiles);
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), createUserProfile);
 
-// @route   POST api/profile/expierence
-// @desc    Add expierence to profile
+// @route   POST api/profile/experience
+// @desc    Add experience to profile
 // @access  Private
 router.post(
-  '/expierence',
+  '/experience',
   passport.authenticate('jwt', { session: false }),
-  addExpierenceToProfile,
+  addExperienceToProfile,
 );
 
 // @route   POST api/profile/education
@@ -55,13 +55,13 @@ router.post(
 // @access  Private
 router.post('/education', passport.authenticate('jwt', { session: false }), addEducationToProfile);
 
-// @route   DELETE api/profile/expierence/:exp_id
+// @route   DELETE api/profile/experience/:exp_id
 // @desc    Delete epierence from profile
 // @access  Private
 router.delete(
-  '/expierence/:exp_id',
+  '/experience/:exp_id',
   passport.authenticate('jwt', { session: false }),
-  deleteExpierenceFromProfile,
+  deleteExperienceFromProfile,
 );
 
 // @route   DELETE api/profile/education/:edu_id

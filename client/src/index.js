@@ -20,7 +20,7 @@ const store = configureStore();
 if (localStorage.jwtToken) {
   // Set auth token header auth
   setAuthToken(localStorage.jwtToken);
-  // Decode token and get user info and expierence
+  // Decode token and get user info and experience
   const decodedUserData = jwt_decode(localStorage.jwtToken);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decodedUserData));

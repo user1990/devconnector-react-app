@@ -1,7 +1,7 @@
 import Validator from 'validator';
 import isEmpty from './is-emty';
 
-export default function validateExpierenceInput(data) {
+export default function validateExperienceInput(data) {
   const errors = {};
 
   data.school = !isEmpty(data.school) ? data.school : '';

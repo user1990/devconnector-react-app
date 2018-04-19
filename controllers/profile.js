@@ -2,7 +2,7 @@ import Profile from '../models/Profile';
 import User from '../models/User';
 // Load validation
 import validateProfileInput from '../validation/profile';
-import validateExpierenceInput from '../validation/expierence';
+import validateExperienceInput from '../validation/experience';
 import validateEducationInput from '../validation/education';
 
 export const getCurrentProfile = (req, res) => {
@@ -130,8 +130,8 @@ export const createUserProfile = (req, res) => {
   });
 };
 
-export const addExpierenceToProfile = (req, res) => {
-  const { errors, isValid } = validateExpierenceInput(req.body);
+export const addExperienceToProfile = (req, res) => {
+  const { errors, isValid } = validateExperienceInput(req.body);
 
   // Check validation
   if (!isValid) {
@@ -139,7 +139,7 @@ export const addExpierenceToProfile = (req, res) => {
   }
 
   Profile.findOne({ user: req.user.id }).then((profile) => {
-    const newExpierence = {
+    const newExperience = {
       school: req.body.school,
       degree: req.body.degree,
       location: req.body.location,
@@ -149,8 +149,8 @@ export const addExpierenceToProfile = (req, res) => {
       description: req.body.description,
     };
 
-    // Add to expierence array
-    profile.expierence.unshift(newExpierence);
+    // Add to experience array
+    profile.experience.unshift(newExperience);
     profile.save().then(profile => res.json(profile));
   });
 };
@@ -175,18 +175,18 @@ export const addEducationToProfile = (req, res) => {
     };
 
     // Add to education array
-    profile.expierence.unshift(newEducation);
+    profile.experience.unshift(newEducation);
     profile.save().then(profile => res.json(profile));
   });
 };
 
-export const deleteExpierenceFromProfile = (req, res) => {
+export const deleteExperienceFromProfile = (req, res) => {
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       // Get remove index
-      const removeIndex = profile.expierence.map(item => item.id).indexof(req.params.exp_id);
+      const removeIndex = profile.experience.map(item => item.id).indexof(req.params.exp_id);
       // Splice out of array
-      profile.expierence.splice(removeIndex, 1);
+      profile.experience.splice(removeIndex, 1);
       // Save
       profile.save().then(profile => res.json(profile));
     })

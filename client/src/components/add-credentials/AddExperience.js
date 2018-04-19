@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import { addExperience } from '../../redux/reducers';
 
 class AddExperience extends Component {
   state = {
@@ -154,4 +155,6 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps)(withRouter(AddExperience));
+export default connect(mapStateToProps, { addExperience })(
+  withRouter(AddExperience)
+);

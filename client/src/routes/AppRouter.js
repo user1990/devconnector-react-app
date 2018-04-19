@@ -10,7 +10,7 @@ import Login from '../components/auth/Login';
 import Dashboard from '../components/dashboard/Dashboard';
 import CreateProfile from '../components/create-profile/CreateProfile';
 import EditProfile from '../components/edit-profile/EditProfile';
-import AddExpierence from '../components/add-credentials/AddExpierence';
+import AddExperience from '../components/add-credentials/AddExperience';
 import AddEducation from '../components/add-credentials/AddEducation';
 
 import PrivateRoute from '../routes/PrivateRoute';
@@ -42,7 +42,7 @@ const App = () => (
           <PrivateRoute
             exact
             path="/add-experience"
-            component={AddExpierence}
+            component={AddExperience}
           />
         </Switch>
         <Switch>
