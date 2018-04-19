@@ -10,6 +10,8 @@ import Login from '../components/auth/Login';
 import Dashboard from '../components/dashboard/Dashboard';
 import CreateProfile from '../components/create-profile/CreateProfile';
 import EditProfile from '../components/edit-profile/EditProfile';
+import AddExpierence from '../components/add-credentials/AddExpierence';
+import AddEducation from '../components/add-credentials/AddEducation';
 
 import PrivateRoute from '../routes/PrivateRoute';
 
@@ -35,6 +37,16 @@ const App = () => (
         </Switch>
         <Switch>
           <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+        </Switch>
+        <Switch>
+          <PrivateRoute
+            exact
+            path="/add-experience"
+            component={AddExpierence}
+          />
+        </Switch>
+        <Switch>
+          <PrivateRoute exact path="/add-education" component={AddEducation} />
         </Switch>
       </div>
     </Switch>
