@@ -43,3 +43,19 @@ img {
   margin-right: 0.3rem;
   border-radius: 50%;
 }
+
+footer.bg-dark.text-white.mt-5.p-4.text-center {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.spinner {
+  width: 12.5rem;
+  margin: auto;
+  display: block;
+}
+
+.create-profile {
+  margin-bottom: 8rem;
+}

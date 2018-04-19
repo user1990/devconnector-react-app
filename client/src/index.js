@@ -4,7 +4,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import { setCurrentUser, logoutUser } from './redux/reducers';
+import {
+  setCurrentUser,
+  logoutUser,
+  clearCurrentProfile,
+} from './redux/reducers';
 import setAuthToken from './utils/setAuthToken';
 import configureStore from './redux/configureStore';
 import AppRouter from './routes/AppRouter';
@@ -26,7 +30,8 @@ if (localStorage.jwtToken) {
   if (decodedUserData.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser);
-    // TODO: Clear current Profile
+    // Clear current Profile
+    store.dispatch(clearCurrentProfile);
     // Redirect to login
     window.location.href = '/login';
   }

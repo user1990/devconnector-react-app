@@ -5,17 +5,18 @@ import isEmpty from '../validation/isEmpty';
 
 /***** CONSTANTS *****/
 export const actionTypes = {
+  // Errors
   GET_ERRORS: 'GET/ERRORS',
   CLEAR_ERRORS: 'CLEAR/ERRORS',
-
+  // USER
   SET_CURRENT_USER: 'SET/CURRENT_USER',
-
+  // PROFILE
   GET_PROFILE: 'GET/PROFILE',
-  PROFILE_LOADING: 'PROFILE/LOADING',
-  PROFILE_NOT_FOUND: 'PROFILE/NOT_FOUND',
-  CLEAR_CURRENT_PROFILE: 'CLEAR/CURRENT_PROFILE',
   GET_PROFILES: 'GET/PROFILES',
-
+  CLEAR_CURRENT_PROFILE: 'CLEAR/CURRENT_PROFILE',
+  PROFILE_NOT_FOUND: 'PROFILE/NOT_FOUND',
+  PROFILE_LOADING: 'PROFILE/LOADING',
+  // POSTS
   POST_LOADING: 'POST/LOADING',
   GET_POSTS: 'GET/POSTS',
   GET_POST: 'GET/POST',
@@ -74,14 +75,72 @@ export const logoutUser = () => dispatch => {
   dispatch(setCurrentUser({}));
 };
 
+// PROFILE
+// Profile loading
+export const setProfileLoading = () => ({
+  type: actionTypes.PROFILE_LOADING,
+});
+
+// Get current profile
+export const getCurrentProfile = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/profile')
+    .then(res =>
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: res.data,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: {},
+      })
+    );
+};
+
+// Create Profile
+export const createProfile = (profileData, history) => dispatch => {
+  axios
+    .post('/api/profile', profileData)
+    .then(res => history.push('/dashboard'))
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// Clear profile
+export const clearCurrentProfile = () => ({
+  type: actionTypes.CLEAR_CURRENT_PROFILE,
+});
+
+// Delete account & profile
+export const deleteAccount = () => dispatch => {
+  if (window.confirm('Are you sure? This can NOT be undone!')) {
+    axios
+      .delete('/api/profile')
+      .then(res => {
+        dispatch({
+          type: actionTypes.SET_CURRENT_USER,
+          payload: {},
+        });
+      })
+      .catch(err => dispatch(getErrors(err.response.data)));
+  }
+};
+
 /***** REDUCERS *****/
 // AUTH
-const initialState = {
+const authState = {
   isAuthenticated: false,
   user: {},
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = authState, action) => {
   switch (action.type) {
     case actionTypes.SET_CURRENT_USER:
       return {
@@ -100,20 +159,40 @@ export const errorReducer = (errors = {}, action) => {
   switch (action.type) {
     case actionTypes.GET_ERRORS:
       return action.payload;
-
     case actionTypes.CLEAR_ERRORS:
       return {};
-
     default:
       return errors;
   }
 };
 
 // PROFILE
-export const profileReducer = (profile = {}, action) => {
+const profileState = {
+  profile: null,
+  profiles: null,
+  loading: false,
+};
+
+export const profileReducer = (state = profileState, action) => {
   switch (action.type) {
+    case actionTypes.PROFILE_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.GET_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
+        loading: false,
+      };
+    case actionTypes.CLEAR_CURRENT_PROFILE:
+      return {
+        ...state,
+        profile: null,
+      };
     default:
-      return profile;
+      return state;
   }
 };
 
