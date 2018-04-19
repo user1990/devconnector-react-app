@@ -139,9 +139,9 @@ export const addExperienceToProfile = (req, res) => {
   }
 
   Profile.findOne({ user: req.user.id }).then((profile) => {
-    const newExperience = {
-      school: req.body.school,
-      degree: req.body.degree,
+    const newExp = {
+      title: req.body.title,
+      company: req.body.company,
       location: req.body.location,
       from: req.body.from,
       to: req.body.to,
@@ -150,7 +150,7 @@ export const addExperienceToProfile = (req, res) => {
     };
 
     // Add to experience array
-    profile.experience.unshift(newExperience);
+    profile.experience.unshift(newExp);
     profile.save().then(profile => res.json(profile));
   });
 };
