@@ -64,6 +64,10 @@ li.nav-item {
   align-self: center;
 }
 
-.experience {
+.add-experience {
+  margin-bottom: 8rem;
+}
+
+.add-education {
   margin-bottom: 8rem;
 }

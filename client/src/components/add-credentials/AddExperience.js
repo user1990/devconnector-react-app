@@ -57,14 +57,14 @@ class AddExperience extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="experience">
+      <div className="add-experience">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
               <Link to="/dashboard" className="btn btn-light">
                 Go Back
               </Link>
-              <h1 className="display-4 text-center">Add AddExperience</h1>
+              <h1 className="display-4 text-center">Add Experience</h1>
               <p className="lead text-center">
                 Add any job or position that you have had in the past or current
               </p>
@@ -128,7 +128,7 @@ class AddExperience extends Component {
                   value={this.state.description}
                   onChange={this.onChange}
                   error={errors.description}
-                  info="Tell us about the the position"
+                  info="Tell us about the position"
                 />
                 <input
                   type="submit"
@@ -151,7 +151,6 @@ AddExperience.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
   errors: state.errors,
 });
 
