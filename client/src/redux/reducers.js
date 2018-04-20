@@ -25,19 +25,18 @@ export const actionTypes = {
 };
 
 /***** ACTIONS *****/
-// ERROR
-const getErrors = err => ({
-  type: actionTypes.GET_ERRORS,
-  payload: err,
-});
-
 // AUTH
 // Register user
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post('/api/users/register', userData)
     .then(res => history.push('/login'))
-    .catch(err => dispatch(getErrors(err.response.data)));
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
 };
 
 // Set Logged in user
@@ -62,7 +61,12 @@ export const loginUser = userData => dispatch => {
       // Set current user
       dispatch(setCurrentUser(decodedUserData));
     })
-    .catch(err => dispatch(getErrors(err.response.data)));
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
 };
 
 // Log user out
@@ -96,6 +100,25 @@ export const getCurrentProfile = () => dispatch => {
       dispatch({
         type: actionTypes.GET_PROFILE,
         payload: {},
+      })
+    );
+};
+
+// Get current profile
+export const getProfileByHandle = handle => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: res.data,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: null,
       })
     );
 };
@@ -144,6 +167,61 @@ export const addEducation = (eduData, history) => dispatch => {
     );
 };
 
+// Delete Experience
+export const deleteExperience = id => dispatch => {
+  axios
+    .delete(`/api/profile/experience/${id}`)
+    .then(res =>
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: res.data,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// Delete Education
+export const deleteEducation = id => dispatch => {
+  axios
+    .delete(`/api/profile/education/${id}`)
+    .then(res =>
+      dispatch({
+        type: actionTypes.GET_PROFILE,
+        payload: res.data,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// Get all profiles
+export const getProfiles = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/profile/all')
+    .then(res =>
+      dispatch({
+        type: actionTypes.GET_PROFILES,
+        payload: res.data,
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_PROFILES,
+        payload: null,
+      })
+    );
+};
+
 // Delete account & profile
 export const deleteAccount = () => dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
@@ -155,7 +233,12 @@ export const deleteAccount = () => dispatch => {
           payload: {},
         });
       })
-      .catch(err => dispatch(getErrors(err.response.data)));
+      .catch(err =>
+        dispatch({
+          type: actionTypes.GET_ERRORS,
+          payload: err.response.data,
+        })
+      );
   }
 };
 
@@ -210,6 +293,12 @@ export const profileReducer = (state = profileState, action) => {
       return {
         ...state,
         profile: action.payload,
+        loading: false,
+      };
+    case actionTypes.GET_PROFILES:
+      return {
+        ...state,
+        profiles: action.payload,
         loading: false,
       };
     case actionTypes.CLEAR_CURRENT_PROFILE:

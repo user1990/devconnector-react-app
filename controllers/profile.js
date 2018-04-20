@@ -14,7 +14,7 @@ export const getCurrentProfile = (req, res) => {
         errors.noprofile = 'There is no profile for this user';
         return res.status(404).json(errors);
       }
-      res.json(profile);
+      return res.json(profile);
     })
     .catch(err => res.status(404).json(err));
 };
@@ -29,7 +29,7 @@ export const getProfileByHandle = (req, res) => {
         errors.noprofile = 'There is no profile for this user';
         return res.status(404).json(errors);
       }
-      res.json(profile);
+      return res.json(profile);
     })
     .catch(err => res.status(404).json(err));
 };
@@ -44,7 +44,7 @@ export const getProfileById = (req, res) => {
         errors.noprofile = 'There is no profile for this user';
         return res.status(404).json(errors);
       }
-      res.json(profile);
+      return res.json(profile);
     })
     .catch(err => res.status(404).json({ err, profile: 'There is no profile for this user' }));
 };
@@ -52,7 +52,7 @@ export const getProfileById = (req, res) => {
 export const getAllProfiles = (req, res) => {
   const errors = {};
 
-  Profile.findOne({ handle: req.params.user_id })
+  Profile.find()
     .populate('User', ['name', 'avatar'])
     .then((profiles) => {
       if (!profiles) {
@@ -184,9 +184,18 @@ export const deleteExperienceFromProfile = (req, res) => {
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       // Get remove index
-      const removeIndex = profile.experience.map(item => item.id).indexof(req.params.exp_id);
-      // Splice out of array
-      profile.experience.splice(removeIndex, 1);
+      const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
+
+      if (removeIndex > -1) {
+        // Splice out of array
+        profile.experience.splice(removeIndex, 1);
+      }
+
+      if (removeIndex === -1) {
+        return res.status(404).json({
+          error: 'There is no experience with this ID',
+        });
+      }
       // Save
       profile.save().then(profile => res.json(profile));
     })
@@ -197,9 +206,18 @@ export const deleteEducationFromProfile = (req, res) => {
   Profile.findOne({ user: req.user.id })
     .then((profile) => {
       // Get remove index
-      const removeIndex = profile.education.map(item => item.id).indexof(req.params.edu_id);
-      // Splice out of array
-      profile.education.splice(removeIndex, 1);
+      const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
+
+      if (removeIndex > -1) {
+        // Splice out of array
+        profile.education.splice(removeIndex, 1);
+      }
+
+      if (removeIndex === -1) {
+        return res.status(404).json({
+          error: 'There is no experience with this ID',
+        });
+      }
       // Save
       profile.save().then(profile => res.json(profile));
     })

@@ -47,7 +47,6 @@ const ProfileSchema = new Schema({
       },
       location: {
         type: String,
-        required: true,
       },
       from: {
         type: Date,
@@ -99,13 +98,13 @@ const ProfileSchema = new Schema({
     youtube: {
       type: String,
     },
+    twitter: {
+      type: String,
+    },
     facebook: {
       type: String,
     },
     linkedin: {
-      type: String,
-    },
-    twitter: {
       type: String,
     },
     instagram: {

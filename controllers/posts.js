@@ -112,7 +112,7 @@ export const deletePost = (req, res) => {
         }
 
         // Delete
-        post.remove().then(() => res.json({ success: true }));
+        return post.remove().then(() => res.json({ success: true }));
       })
       .catch(err => res.status(404).json({ err, nopostfound: 'No post found' }));
   });
@@ -136,7 +136,7 @@ export const deleteComment = (req, res) => {
 
         // Splice out of array
         comments.splice(removeIndex, 1);
-        post.save().then(post => res.json(post));
+        return post.save().then(post => res.json(post));
       })
       .catch(err => res.status(404).json({ err, nopostfound: 'No post found' }));
   });
