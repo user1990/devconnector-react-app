@@ -76,6 +76,11 @@ class AddEducation extends Component {
                   value={this.state.school}
                   onChange={this.onChange}
                   error={errors.school}
+                  className={
+                    errors.school
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="* Degree or Certification"
@@ -83,6 +88,11 @@ class AddEducation extends Component {
                   value={this.state.degree}
                   onChange={this.onChange}
                   error={errors.degree}
+                  className={
+                    errors.degree
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="Field of Study"
@@ -90,6 +100,11 @@ class AddEducation extends Component {
                   value={this.state.fieldofstudy}
                   onChange={this.onChange}
                   error={errors.fieldofstudy}
+                  className={
+                    errors.fieldofstudy
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <h6>From Date</h6>
                 <TextFieldGroup
@@ -98,6 +113,11 @@ class AddEducation extends Component {
                   value={this.state.from}
                   onChange={this.onChange}
                   error={errors.from}
+                  className={
+                    errors.from
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <h6>To Date</h6>
                 <TextFieldGroup
@@ -107,6 +127,11 @@ class AddEducation extends Component {
                   onChange={this.onChange}
                   error={errors.to}
                   disabled={this.state.disabled ? 'disabled' : ''}
+                  className={
+                    errors.to
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <div className="form-check mb-4">
                   <input
@@ -129,6 +154,11 @@ class AddEducation extends Component {
                   onChange={this.onChange}
                   error={errors.description}
                   info="Tell us about the program that you were in"
+                  className={
+                    errors.description
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <input
                   type="submit"

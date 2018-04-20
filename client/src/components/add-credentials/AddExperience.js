@@ -76,6 +76,11 @@ class AddExperience extends Component {
                   value={this.state.company}
                   onChange={this.onChange}
                   error={errors.company}
+                  className={
+                    errors.company
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="* Job Title"
@@ -83,6 +88,11 @@ class AddExperience extends Component {
                   value={this.state.title}
                   onChange={this.onChange}
                   error={errors.title}
+                  className={
+                    errors.title
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="Location"
@@ -90,6 +100,11 @@ class AddExperience extends Component {
                   value={this.state.location}
                   onChange={this.onChange}
                   error={errors.location}
+                  className={
+                    errors.location
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <h6>From Date</h6>
                 <TextFieldGroup
@@ -98,6 +113,11 @@ class AddExperience extends Component {
                   value={this.state.from}
                   onChange={this.onChange}
                   error={errors.from}
+                  className={
+                    errors.from
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <h6>To Date</h6>
                 <TextFieldGroup
@@ -107,6 +127,11 @@ class AddExperience extends Component {
                   onChange={this.onChange}
                   error={errors.to}
                   disabled={this.state.disabled ? 'disabled' : ''}
+                  className={
+                    errors.to
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <div className="form-check mb-4">
                   <input
@@ -129,6 +154,11 @@ class AddExperience extends Component {
                   onChange={this.onChange}
                   error={errors.description}
                   info="Tell us about the position"
+                  className={
+                    errors.description
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <input
                   type="submit"

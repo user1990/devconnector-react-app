@@ -1,11 +1,11 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
 const TextFieldGroup = ({
   name,
   placeholder,
+  className,
   value,
   error,
   info,
@@ -16,9 +16,7 @@ const TextFieldGroup = ({
   <div className="form-group">
     <input
       type={type}
-      className={classnames('form-control form-control-lg', {
-        'is-invalid': error,
-      })}
+      className={className}
       placeholder={placeholder}
       name={name}
       value={value}
@@ -33,6 +31,7 @@ const TextFieldGroup = ({
 TextFieldGroup.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  className: PropTypes.string,
   value: PropTypes.string.isRequired,
   info: PropTypes.string,
   error: PropTypes.string,

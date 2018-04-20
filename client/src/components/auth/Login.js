@@ -62,6 +62,11 @@ class Login extends Component {
                   placeholder="Email Address"
                   name="email"
                   type="email"
+                  className={
+                    errors.name
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                   value={email}
                   onChange={this.onChange}
                   error={errors.email}
@@ -70,6 +75,11 @@ class Login extends Component {
                   placeholder="Password"
                   name="password"
                   type="password"
+                  className={
+                    errors.password
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                   value={password}
                   onChange={this.onChange}
                   error={errors.password}

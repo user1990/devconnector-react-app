@@ -66,6 +66,11 @@ class Register extends Component {
                   value={name}
                   onChange={this.onChange}
                   error={errors.name}
+                  className={
+                    errors.name
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="Email Address"
@@ -75,6 +80,11 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                  className={
+                    errors.email
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -83,6 +93,11 @@ class Register extends Component {
                   value={password}
                   onChange={this.onChange}
                   error={errors.password}
+                  className={
+                    errors.password
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <TextFieldGroup
                   placeholder="Confirm Password"
@@ -91,6 +106,11 @@ class Register extends Component {
                   value={password2}
                   onChange={this.onChange}
                   error={errors.password2}
+                  className={
+                    errors.password2
+                      ? 'form-control form-control-lg is-invalid'
+                      : 'form-control form-control-lg'
+                  }
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
