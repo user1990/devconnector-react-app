@@ -22,7 +22,7 @@ class Profile extends Component {
     const { profile } = nextProps.profile;
     const { loading } = this.props.profile;
     if (profile === null && loading) {
-      this.props.history.push('*');
+      this.props.history.push('/not-found');
     }
   };
 

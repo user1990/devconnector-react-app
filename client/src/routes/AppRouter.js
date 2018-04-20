@@ -14,6 +14,7 @@ import AddExperience from '../components/add-credentials/AddExperience';
 import AddEducation from '../components/add-credentials/AddEducation';
 import Profiles from '../components/profiles/Profiles';
 import Profile from '../components/profile/Profile';
+import Posts from '../components/posts/Posts';
 import NotFound from '../components/not-found/NotFound';
 
 import PrivateRoute from '../routes/PrivateRoute';
@@ -53,7 +54,10 @@ const App = () => (
         <Switch>
           <PrivateRoute exact path="/add-education" component={AddEducation} />
         </Switch>
-        <Route exact path="*" component={NotFound} />
+        <Switch>
+          <PrivateRoute exact path="/feed" component={Posts} />
+        </Switch>
+        <Route exact path="not-found" component={NotFound} />
       </div>
     </Switch>
     <Footer />

@@ -242,6 +242,106 @@ export const deleteAccount = () => dispatch => {
   }
 };
 
+// POSTS
+// Set loading state
+export const setPostLoading = () => ({
+  type: actionTypes.POST_LOADING,
+});
+
+// Add Post
+export const addPost = postData => dispatch => {
+  axios
+    .post('/api/posts', postData)
+    .then(res => {
+      dispatch({
+        type: actionTypes.ADD_POST,
+        payload: res.data,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// Add Post
+export const getPosts = () => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get('/api/posts')
+    .then(res => {
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: null,
+      })
+    );
+};
+
+// Delete Post
+export const deletePost = () => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get('/api/posts')
+    .then(res => {
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: null,
+      })
+    );
+};
+
+// Add Like
+export const addLike = () => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get('/api/posts')
+    .then(res => {
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: null,
+      })
+    );
+};
+
+// Remove Like
+export const removeLike = () => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get('/api/posts')
+    .then(res => {
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_POSTS,
+        payload: null,
+      })
+    );
+};
+
 /***** REDUCERS *****/
 // AUTH
 const authState = {
@@ -264,14 +364,14 @@ export const authReducer = (state = authState, action) => {
 };
 
 // ERRORS
-export const errorReducer = (errors = {}, action) => {
+export const errorReducer = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.GET_ERRORS:
       return action.payload;
     case actionTypes.CLEAR_ERRORS:
       return {};
     default:
-      return errors;
+      return state;
   }
 };
 
@@ -312,9 +412,31 @@ export const profileReducer = (state = profileState, action) => {
 };
 
 // POST
-export const postReducer = (post = {}, action) => {
+const initialState = {
+  posts: [],
+  post: {},
+  loading: false,
+};
+
+export const postReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.POST_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.GET_POSTS:
+      return {
+        ...state,
+        posts: action.payload,
+        loading: false,
+      };
+    case actionTypes.ADD_POST:
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts],
+      };
     default:
-      return post;
+      return state;
   }
 };
