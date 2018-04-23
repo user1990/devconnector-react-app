@@ -250,7 +250,7 @@ export const setPostLoading = () => ({
 
 // Clear Errors
 export const clearErrors = () => ({
-  type: actionTypes.clearErrors,
+  type: actionTypes.CLEAR_ERRORS,
 });
 
 // Add Post

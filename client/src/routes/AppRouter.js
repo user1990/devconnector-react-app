@@ -25,45 +25,35 @@ import '../styles/App.css';
 const App = () => (
   <div className="app">
     <Navbar />
-    <Switch>
-      <Route exact path="/" component={Landing} />
-      <div className="container">
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/profiles" component={Profiles} />
-        <Route exact path="/profile/:handle" component={Profile} />
-        <Switch>
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
-        </Switch>
-        <Switch>
-          <PrivateRoute
-            exact
-            path="/create-profile"
-            component={CreateProfile}
-          />
-        </Switch>
-        <Switch>
-          <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-        </Switch>
-        <Switch>
-          <PrivateRoute
-            exact
-            path="/add-experience"
-            component={AddExperience}
-          />
-        </Switch>
-        <Switch>
-          <PrivateRoute exact path="/add-education" component={AddEducation} />
-        </Switch>
-        <Switch>
-          <PrivateRoute exact path="/feed" component={Posts} />
-        </Switch>
-        <Switch>
-          <PrivateRoute exact path="/post/:id" component={Post} />
-        </Switch>
-        <Route exact path="not-found" component={NotFound} />
-      </div>
-    </Switch>
+    <Route exact path="/" component={Landing} />
+    <div className="container">
+      <Route exact path="/register" component={Register} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/profiles" component={Profiles} />
+      <Route exact path="/profile/:handle" component={Profile} />
+      <Switch>
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+      </Switch>
+      <Switch>
+        <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+      </Switch>
+      <Switch>
+        <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+      </Switch>
+      <Switch>
+        <PrivateRoute exact path="/add-experience" component={AddExperience} />
+      </Switch>
+      <Switch>
+        <PrivateRoute exact path="/add-education" component={AddEducation} />
+      </Switch>
+      <Switch>
+        <PrivateRoute exact path="/feed" component={Posts} />
+      </Switch>
+      <Switch>
+        <PrivateRoute exact path="/post/:id" component={Post} />
+      </Switch>
+      <Route exact path="not-found" component={NotFound} />
+    </div>
     <Footer />
   </div>
 );

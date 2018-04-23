@@ -51,7 +51,7 @@ Post.propTypes = {
   getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
+  //loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
