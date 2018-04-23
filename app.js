@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 import db from './config/keys';
 // import passport from './services/passport';
@@ -34,6 +35,16 @@ require('./services/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // Error handling
 app.use((req, res, next) => {
