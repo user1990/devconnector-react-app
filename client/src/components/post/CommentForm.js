@@ -3,60 +3,58 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-import { addPost } from '../../redux/reducers';
+import { addComment } from '../../redux/reducers';
 
-class PostForm extends Component {
+class CommentForm extends Component {
   state = {
     text: '',
     errors: {},
   };
 
-  componentWillReceiveProps = newProps => {
+  componentWillReceiveProps(newProps) {
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
     }
-  };
+  }
 
-  onSubmit = e => {
+  onSubmit(e) {
     e.preventDefault();
 
     const { user } = this.props.auth;
+    const { postId } = this.props;
 
-    const newPost = {
+    const newComment = {
       text: this.state.text,
       name: user.name,
       avatar: user.avatar,
     };
 
-    this.props.addPost(newPost);
+    this.props.addComment(postId, newComment);
     this.setState({ text: '' });
-  };
+  }
 
-  onChange = e => {
+  onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-  };
+  }
 
   render() {
-    const { errors } = this.state;
+    const { errors, text } = this.state;
 
     return (
       <div className="post-form mb-3">
         <div className="card card-info">
-          <div className="card-header bg-info text-white">Say Something...</div>
+          <div className="card-header bg-info text-white">
+            Make a comment...
+          </div>
           <div className="card-body">
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup
-                  placeholder="Create a post"
+                  placeholder="Reply to post"
                   name="text"
-                  value={this.state.text}
+                  value={text}
                   onChange={this.onChange}
                   error={errors.text}
-                  className={
-                    errors.text
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
               </div>
               <button type="submit" className="btn btn-dark">
@@ -70,9 +68,10 @@ class PostForm extends Component {
   }
 }
 
-PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired,
+CommentForm.propTypes = {
+  addComment: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -80,4 +79,4 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(mapStateToProps, { addComment })(CommentForm);

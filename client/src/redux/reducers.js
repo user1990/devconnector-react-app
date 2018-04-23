@@ -248,8 +248,14 @@ export const setPostLoading = () => ({
   type: actionTypes.POST_LOADING,
 });
 
+// Clear Errors
+export const clearErrors = () => ({
+  type: actionTypes.clearErrors,
+});
+
 // Add Post
 export const addPost = postData => dispatch => {
+  dispatch(clearErrors());
   axios
     .post('/api/posts', postData)
     .then(res => {
@@ -266,7 +272,7 @@ export const addPost = postData => dispatch => {
     );
 };
 
-// Add Post
+// Get Posts
 export const getPosts = () => dispatch => {
   dispatch(setPostLoading());
   axios
@@ -285,59 +291,104 @@ export const getPosts = () => dispatch => {
     );
 };
 
-// Delete Post
-export const deletePost = () => dispatch => {
+// Get Post
+export const getPost = id => dispatch => {
   dispatch(setPostLoading());
   axios
-    .get('/api/posts')
+    .get(`/api/post/${id}`)
     .then(res => {
       dispatch({
-        type: actionTypes.GET_POSTS,
+        type: actionTypes.GET_POST,
         payload: res.data,
       });
     })
     .catch(err =>
       dispatch({
-        type: actionTypes.GET_POSTS,
+        type: actionTypes.GET_POST,
         payload: null,
+      })
+    );
+};
+
+// Delete Post
+export const deletePost = id => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .delete(`/api/posts/${id}`)
+    .then(res => {
+      dispatch({
+        type: actionTypes.DELETE_POST,
+        payload: id,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
       })
     );
 };
 
 // Add Like
-export const addLike = () => dispatch => {
+export const addLike = id => dispatch => {
   dispatch(setPostLoading());
   axios
-    .get('/api/posts')
-    .then(res => {
-      dispatch({
-        type: actionTypes.GET_POSTS,
-        payload: res.data,
-      });
-    })
+    .post(`/api/posts/like/${id}`)
+    .then(res => dispatch(getPosts()))
     .catch(err =>
       dispatch({
         type: actionTypes.GET_POSTS,
-        payload: null,
+        payload: err.response.data,
       })
     );
 };
 
 // Remove Like
-export const removeLike = () => dispatch => {
-  dispatch(setPostLoading());
+export const removeLike = id => dispatch => {
   axios
-    .get('/api/posts')
+    .post(`/api/posts/unlike/${id}`)
+    .then(res => dispatch(getPosts()))
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// Add Comment
+export const addComment = (postId, commentData) => dispatch => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/posts/comment/${postId}`, commentData)
     .then(res => {
       dispatch({
-        type: actionTypes.GET_POSTS,
+        type: actionTypes.GET_POST,
         payload: res.data,
       });
     })
     .catch(err =>
       dispatch({
-        type: actionTypes.GET_POSTS,
-        payload: null,
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
+      })
+    );
+};
+
+// Delete Comment
+export const deleteComment = (postId, commentId) => dispatch => {
+  axios
+    .delete(`/api/posts/comment/${postId}/${commentId}`)
+    .then(res => {
+      dispatch({
+        type: actionTypes.GET_POST,
+        payload: res.data,
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: actionTypes.GET_ERRORS,
+        payload: err.response.data,
       })
     );
 };
@@ -431,10 +482,21 @@ export const postReducer = (state = initialState, action) => {
         posts: action.payload,
         loading: false,
       };
+    case actionTypes.GET_POST:
+      return {
+        ...state,
+        post: action.payload,
+        loading: false,
+      };
     case actionTypes.ADD_POST:
       return {
         ...state,
         posts: [action.payload, ...state.posts],
+      };
+    case actionTypes.DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== action.payload),
       };
     default:
       return state;
