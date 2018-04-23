@@ -1,4 +1,3 @@
-import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -7,12 +6,12 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 import db from './config/keys';
-// import passport from './services/passport';
-// require('./models/User');
 
 import users from './routes/api/users';
 import profile from './routes/api/profile';
 import posts from './routes/api/posts';
+
+const express = require('express');
 
 const app = express();
 
