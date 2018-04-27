@@ -2,7 +2,6 @@ import logger from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import bodyParser from 'body-parser';
 import path from 'path';
 
 import db from './config/keys';
@@ -25,8 +24,8 @@ mongoose
 // Middleware
 app.use(logger('dev'));
 app.use(cors({ credentials: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(passport.initialize());
 require('./services/passport')(passport);
 
