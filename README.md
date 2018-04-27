@@ -16,7 +16,7 @@ Create a developer profile/portfolio, share posts and get help from other develo
 ### Server Side
 
 * [x] **[Node.js / Express](https://github.com/expressjs/express)**
-* [x] **[Redux](https://github.com/mongodb/mongo)**
+* [x] **[MongoDB](https://github.com/mongodb/mongo)**
 * [x] **[JWT](https://github.com/auth0/node-jsonwebtoken)**
 * [x] **[Passport](http://www.passportjs.org/)**
 
