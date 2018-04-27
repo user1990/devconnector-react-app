@@ -8,16 +8,17 @@ Create a developer profile/portfolio, share posts and get help from other develo
 
 ### Client Side
 
-* React & Redux
-* Twitter Bootstap 4
-* ES6+ JavaScript
+* [x] **[React](https://github.com/facebook/react)**
+* [x] **[Redux](https://github.com/reactjs/redux)**
+* [x] **[Twitter Bootstap 4](https://github.com/twbs/bootstrap/tree/v4-dev)**
+* [x] **[React-Router](https://github.com/ReactTraining/react-router)**
 
 ### Server Side
 
-* Node.js / Express
-* MongoDB / mongoose
-* JWT
-* Passport
+* [x] **[Node.js / Express](https://github.com/expressjs/express)**
+* [x] **[Redux](https://github.com/mongodb/mongo)**
+* [x] **[JWT](https://github.com/auth0/node-jsonwebtoken)**
+* [x] **[Passport](http://www.passportjs.org/)**
 
 ### Setup
 
