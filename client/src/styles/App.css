@@ -56,6 +56,25 @@ footer.bg-dark.text-white.mt-5.p-4.text-center {
   display: block;
 }
 
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  border-top: 2px solid coral;
+  border-right: 2px solid transparent;
+  animation: spinner 0.7s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .create-profile {
   margin-bottom: 8rem;
 }
