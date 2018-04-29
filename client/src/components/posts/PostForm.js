@@ -29,7 +29,10 @@ class PostForm extends Component {
     };
 
     this.props.addPost(newPost);
-    this.setState({ text: '' });
+
+    if (this.state.text.length > 10) {
+      this.setState({ text: '' });
+    }
   };
 
   onChange = e => {
