@@ -9,7 +9,7 @@ import {
   logoutUser,
   clearCurrentProfile,
 } from './redux/reducers';
-import setAuthToken from './utils/setAuthToken';
+import setAuthorizationHeader from './utils/setAuthorizationHeader';
 import configureStore from './redux/configureStore';
 import AppRouter from './routes/AppRouter';
 import registerServiceWorker from './registerServiceWorker';
@@ -19,7 +19,7 @@ const store = configureStore();
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
-  setAuthToken(localStorage.jwtToken);
+  setAuthorizationHeader(localStorage.jwtToken);
   // Decode token and get user info and experience
   const decodedUserData = jwt_decode(localStorage.jwtToken);
   // Set user and isAuthenticated

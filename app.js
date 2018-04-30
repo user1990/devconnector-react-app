@@ -3,9 +3,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import path from 'path';
-
-import db from './config/keys';
-
+import keys from './config/keys';
+// Routes import
 import users from './routes/api/users';
 import profile from './routes/api/profile';
 import posts from './routes/api/posts';
@@ -16,13 +15,19 @@ const app = express();
 
 // MongoDb connection
 mongoose.Promise = global.Promise;
-mongoose
-  .connect(db.MONGO_URI)
-  .then(() => console.log('Mongo DB connected'))
-  .catch(err => console.log(err));
+if (process.env.NODE_ENV === 'test') {
+  mongoose.connect(keys.MONGO_URI_TEST);
+} else {
+  mongoose
+    .connect(keys.MONGO_URI)
+    .then(() => console.log('Mongo DB connected'))
+    .catch(err => console.log(err));
+}
 
 // Middleware
-app.use(logger('dev'));
+if (!process.env.NODE_ENV === 'test') {
+  app.use(logger('dev'));
+}
 app.use(cors({ credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

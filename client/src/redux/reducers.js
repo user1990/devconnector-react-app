@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import setAuthToken from '../utils/setAuthToken';
+import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 import isEmpty from '../validation/isEmpty';
 
 /***** CONSTANTS *****/
@@ -25,18 +25,19 @@ export const actionTypes = {
 };
 
 /***** ACTIONS *****/
+// Errors
+export const getErrors = err => ({
+  type: actionTypes.GET_ERRORS,
+  payload: err.response.data,
+});
+
 // AUTH
 // Register user
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post('/api/users/register', userData)
     .then(res => history.push('/login'))
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Set Logged in user
@@ -55,18 +56,13 @@ export const loginUser = userData => dispatch => {
       // Set token to localStorage
       localStorage.setItem('jwtToken', token);
       // Set token to Auth header
-      setAuthToken(token);
+      setAuthorizationHeader(token);
       // Decode token to get user data
       const decodedUserData = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decodedUserData));
     })
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Log user out
@@ -74,7 +70,7 @@ export const logoutUser = () => dispatch => {
   // Remove token from localStorage
   localStorage.removeItem('jwtToken');
   // Remove auth header for future requests
-  setAuthToken(false);
+  setAuthorizationHeader(false);
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };
@@ -128,12 +124,7 @@ export const createProfile = (profileData, history) => dispatch => {
   axios
     .post('/api/profile', profileData)
     .then(res => history.push('/dashboard'))
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Clear profile
@@ -146,12 +137,7 @@ export const addExperience = (expData, history) => dispatch => {
   axios
     .post('/api/profile/experience', expData)
     .then(res => history.push('/dashboard'))
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Add education
@@ -159,12 +145,7 @@ export const addEducation = (eduData, history) => dispatch => {
   axios
     .post('/api/profile/education', eduData)
     .then(res => history.push('/dashboard'))
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Delete Experience
@@ -177,12 +158,7 @@ export const deleteExperience = id => dispatch => {
         payload: res.data,
       })
     )
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Delete Education
@@ -195,12 +171,7 @@ export const deleteEducation = id => dispatch => {
         payload: res.data,
       })
     )
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Get all profiles
@@ -233,12 +204,7 @@ export const deleteAccount = () => dispatch => {
           payload: {},
         });
       })
-      .catch(err =>
-        dispatch({
-          type: actionTypes.GET_ERRORS,
-          payload: err.response.data,
-        })
-      );
+      .catch(error => dispatch(getErrors(error)));
   }
 };
 
@@ -264,12 +230,7 @@ export const addPost = postData => dispatch => {
         payload: res.data,
       });
     })
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(error => dispatch(getErrors(error)));
 };
 
 // Get Posts
@@ -321,12 +282,7 @@ export const deletePost = id => dispatch => {
         payload: id,
       });
     })
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(err => dispatch(getErrors(err)));
 };
 
 // Add Like
@@ -348,12 +304,7 @@ export const removeLike = id => dispatch => {
   axios
     .post(`/api/posts/unlike/${id}`)
     .then(res => dispatch(getPosts()))
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(err => dispatch(getErrors(err)));
 };
 
 // Add Comment
@@ -367,12 +318,7 @@ export const addComment = (postId, commentData) => dispatch => {
         payload: res.data,
       });
     })
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(err => dispatch(getErrors(err)));
 };
 
 // Delete Comment
@@ -385,12 +331,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
         payload: res.data,
       });
     })
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_ERRORS,
-        payload: err.response.data,
-      })
-    );
+    .catch(err => dispatch(getErrors(err)));
 };
 
 /***** REDUCERS *****/

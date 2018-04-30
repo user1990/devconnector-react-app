@@ -20,7 +20,7 @@ import NotFound from '../components/not-found/NotFound';
 
 import PrivateRoute from '../routes/PrivateRoute';
 
-import '../styles/App.css';
+import '../styles/App.scss';
 
 const App = () => (
   <div className="app">
