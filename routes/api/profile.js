@@ -15,11 +15,12 @@ import {
 } from '../../controllers/profile';
 
 const router = express.Router();
+const passportJWT = passport.authenticate('jwt', { session: false });
 
 // @route   GET api/profile
 // @desc    Get current users profile
 // @access  Private
-router.get('/', passport.authenticate('jwt', { session: false }), getCurrentProfile);
+router.get('/', passportJWT, getCurrentProfile);
 
 // @route   GET api/profile/handle/:handle
 // @desc    Get profile by handle
@@ -39,43 +40,31 @@ router.get('/all', getAllProfiles);
 // @route   POST api/profile
 // @desc    Create/Edit user profile
 // @access  Private
-router.post('/', passport.authenticate('jwt', { session: false }), createUserProfile);
+router.post('/', passportJWT, createUserProfile);
 
 // @route   POST api/profile/experience
 // @desc    Add experience to profile
 // @access  Private
-router.post(
-  '/experience',
-  passport.authenticate('jwt', { session: false }),
-  addExperienceToProfile,
-);
+router.post('/experience', passportJWT, addExperienceToProfile);
 
 // @route   POST api/profile/education
 // @desc    Add education to profile
 // @access  Private
-router.post('/education', passport.authenticate('jwt', { session: false }), addEducationToProfile);
+router.post('/education', passportJWT, addEducationToProfile);
 
 // @route   DELETE api/profile/experience/:exp_id
 // @desc    Delete epierence from profile
 // @access  Private
-router.delete(
-  '/experience/:exp_id',
-  passport.authenticate('jwt', { session: false }),
-  deleteExperienceFromProfile,
-);
+router.delete('/experience/:exp_id', passportJWT, deleteExperienceFromProfile);
 
 // @route   DELETE api/profile/education/:edu_id
 // @desc    Delete education from profile
 // @access  Private
-router.delete(
-  '/education/:edu_id',
-  passport.authenticate('jwt', { session: false }),
-  deleteEducationFromProfile,
-);
+router.delete('/education/:edu_id', passportJWT, deleteEducationFromProfile);
 
 // @route   DELETE api/profile
 // @desc    Delete user and profile
 // @access  Private
-router.delete('/', passport.authenticate('jwt', { session: false }), deleteUserAndProfile);
+router.delete('/', passportJWT, deleteUserAndProfile);
 
 export default router;

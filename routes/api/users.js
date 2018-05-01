@@ -4,6 +4,7 @@ import passport from 'passport';
 import { registerUser, loginUser, currentUser } from '../../controllers/users';
 
 const router = express.Router();
+const passportJWT = passport.authenticate('jwt', { session: false });
 
 // @route   POST api/users/register
 // @desc    Register user
@@ -19,6 +20,6 @@ router.post('/login', loginUser);
 // @desc    Return current user
 // @access  Private
 
-router.get('/current', passport.authenticate('jwt', { session: false }), currentUser);
+router.get('/current', passportJWT, currentUser);
 
 export default router;
