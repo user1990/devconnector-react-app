@@ -33,11 +33,13 @@ export const getErrors = err => ({
 
 // AUTH
 // Register user
-export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post('/api/users/register', userData)
-    .then(res => history.push('/login'))
-    .catch(error => dispatch(getErrors(error)));
+export const registerUser = (userData, history) => async dispatch => {
+  try {
+    await axios.post('/api/users/register', userData);
+    history.push('/login');
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Set Logged in user
@@ -47,31 +49,36 @@ export const setCurrentUser = decodedUserData => ({
 });
 
 // Login - Get User Token
-export const loginUser = userData => dispatch => {
-  axios
-    .post('/api/users/login', userData)
-    .then(res => {
-      // Save to localstorage
-      const { token } = res.data;
-      // Set token to localStorage
-      localStorage.setItem('jwtToken', token);
-      // Set token to Auth header
-      setAuthorizationHeader(token);
-      // Decode token to get user data
-      const decodedUserData = jwt_decode(token);
-      // Set current user
-      dispatch(setCurrentUser(decodedUserData));
-    })
-    .catch(error => dispatch(getErrors(error)));
+export const loginUser = userData => async dispatch => {
+  try {
+    const response = await axios.post('/api/users/login', userData);
+    const { token } = response.data;
+
+    // Set token in localStorage
+    localStorage.setItem('jwtToken', token);
+
+    // Set token to Auth header
+    setAuthorizationHeader(token);
+
+    // Decode token to get user data
+    const decodedUserData = jwt_decode(token);
+
+    // Set current user
+    dispatch(setCurrentUser(decodedUserData));
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Log user out
-export const logoutUser = () => dispatch => {
+export const logoutUser = () => async dispatch => {
   // Remove token from localStorage
   localStorage.removeItem('jwtToken');
+
   // Remove auth header for future requests
   setAuthorizationHeader(false);
-  // Set current user to {} which will set isAuthenticated to false
+
+  // Set current user to {} which will set isAuthenticated = false
   dispatch(setCurrentUser({}));
 };
 
@@ -336,12 +343,12 @@ export const deleteComment = (postId, commentId) => dispatch => {
 
 /***** REDUCERS *****/
 // AUTH
-const authState = {
+const initialAuthState = {
   isAuthenticated: false,
   user: {},
 };
 
-export const authReducer = (state = authState, action) => {
+export const authReducer = (state = initialAuthState, action) => {
   switch (action.type) {
     case actionTypes.SET_CURRENT_USER:
       return {
@@ -356,25 +363,27 @@ export const authReducer = (state = authState, action) => {
 };
 
 // ERRORS
-export const errorReducer = (state = {}, action) => {
+const initialErrorState = {};
+
+export const errorReducer = (state = initialErrorState, action) => {
   switch (action.type) {
     case actionTypes.GET_ERRORS:
       return action.payload;
     case actionTypes.CLEAR_ERRORS:
-      return {};
+      return initialErrorState;
     default:
       return state;
   }
 };
 
 // PROFILE
-const profileState = {
+const initialProfileState = {
   profile: null,
   profiles: null,
   loading: false,
 };
 
-export const profileReducer = (state = profileState, action) => {
+export const profileReducer = (state = initialProfileState, action) => {
   switch (action.type) {
     case actionTypes.PROFILE_LOADING:
       return {
@@ -404,13 +413,13 @@ export const profileReducer = (state = profileState, action) => {
 };
 
 // POST
-const initialState = {
+const initialPostState = {
   posts: [],
   post: {},
   loading: false,
 };
 
-export const postReducer = (state = initialState, action) => {
+export const postReducer = (state = initialPostState, action) => {
   switch (action.type) {
     case actionTypes.POST_LOADING:
       return {

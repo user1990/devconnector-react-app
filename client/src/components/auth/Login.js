@@ -31,15 +31,19 @@ class Login extends Component {
   };
 
   onChange = e => {
+    // Remove autocomplete suggestion
+    if (!e.isTrusted) return;
+
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
 
+    const { email, password } = this.state;
     const userData = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
 
     this.props.loginUser(userData);
@@ -62,27 +66,29 @@ class Login extends Component {
                   placeholder="Email Address"
                   name="email"
                   type="email"
+                  value={email}
+                  autoComplete="email"
+                  onChange={this.onChange}
+                  error={errors.email}
                   className={
                     errors.name
                       ? 'form-control form-control-lg is-invalid'
                       : 'form-control form-control-lg'
                   }
-                  value={email}
-                  onChange={this.onChange}
-                  error={errors.email}
                 />
                 <TextFieldGroup
                   placeholder="Password"
                   name="password"
                   type="password"
+                  value={password}
+                  autoComplete="new-password"
+                  onChange={this.onChange}
+                  error={errors.password}
                   className={
                     errors.password
                       ? 'form-control form-control-lg is-invalid'
                       : 'form-control form-control-lg'
                   }
-                  value={password}
-                  onChange={this.onChange}
-                  error={errors.password}
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>

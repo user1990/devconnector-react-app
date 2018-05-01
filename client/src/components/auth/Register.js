@@ -23,11 +23,11 @@ class Register extends Component {
     }
   };
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-  };
+  }
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -36,11 +36,12 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
 
+    const { name, email, password, password2 } = this.state;
     const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2,
+      name,
+      email,
+      password,
+      password2,
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -64,6 +65,7 @@ class Register extends Component {
                   name="name"
                   type="text"
                   value={name}
+                  autoComplete="name"
                   onChange={this.onChange}
                   error={errors.name}
                   className={
@@ -77,6 +79,7 @@ class Register extends Component {
                   name="email"
                   type="email"
                   value={email}
+                  autoComplete="email"
                   onChange={this.onChange}
                   error={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
@@ -91,6 +94,7 @@ class Register extends Component {
                   name="password"
                   type="password"
                   value={password}
+                  autoComplete="new-password"
                   onChange={this.onChange}
                   error={errors.password}
                   className={
@@ -104,6 +108,7 @@ class Register extends Component {
                   name="password2"
                   type="password"
                   value={password2}
+                  autoComplete="new-password"
                   onChange={this.onChange}
                   error={errors.password2}
                   className={

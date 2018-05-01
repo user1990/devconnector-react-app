@@ -12,6 +12,7 @@ const TextFieldGroup = ({
   type,
   onChange,
   disabled,
+  autoComplete,
 }) => (
   <div className="form-group">
     <input
@@ -20,6 +21,7 @@ const TextFieldGroup = ({
       placeholder={placeholder}
       name={name}
       value={value}
+      autoComplete={autoComplete}
       onChange={onChange}
       disabled={disabled}
     />
@@ -38,6 +40,7 @@ TextFieldGroup.propTypes = {
   type: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.string,
+  autoComplete: PropTypes.string,
 };
 
 export default TextFieldGroup;

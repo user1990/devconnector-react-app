@@ -21,23 +21,29 @@ if (process.env.NODE_ENV === 'test') {
   mongoose
     .connect(keys.MONGO_URI)
     .then(() => console.log('Mongo DB connected'))
-    .catch(err => console.log(err));
+    .catch(err => console.log('MongoDB connect failed', err));
 }
 
 // Middleware
-if (!process.env.NODE_ENV === 'test') {
+if (!process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 app.use(cors({ credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
+
+// Passport configuration
 require('./services/passport')(passport);
 
 // Routes
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+
+app.get('/', (req, res) => {
+  res.send('GET request working');
+});
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
@@ -46,6 +52,12 @@ if (process.env.NODE_ENV === 'production') {
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+} else {
+  app.use(express.static('client/public'));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
   });
 }
 
@@ -65,4 +77,4 @@ app.use((error, req, res) => {
   });
 });
 
-module.exports = app;
+export default app;

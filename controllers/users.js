@@ -11,21 +11,19 @@ import validateLoginInput from '../validation/login';
 
 export const registerUser = async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
-
-  // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
   const { name, email, password } = req.body;
-  const user = await User.findOne({ email });
+  const existingUser = await User.findOne({ email });
 
-  if (user) {
+  if (existingUser) {
     errors.email = 'Email already exists';
     return res.status(400).json(errors);
   }
 
-  const avatar = gravatar.url(req.body.email, {
+  const avatar = gravatar.url(email, {
     s: '200', // Size
     r: 'pg', // Rating
     d: 'mm', // Default
@@ -74,7 +72,7 @@ export const loginUser = async (req, res) => {
     // Check for user
     if (!user) {
       errors.email = 'Email not found';
-      return res.status(404).json(errors);
+      return res.statusS(404).json(errors);
     }
 
     // Check password
@@ -93,7 +91,7 @@ export const loginUser = async (req, res) => {
     };
 
     // Sign token
-    const token = await jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 });
+    const token = await jwt.sign(payload, keys.JWT_SECRET, { expiresIn: 3600 });
 
     return res.json({ success: true, token: `Bearer ${token}` });
   } catch (err) {

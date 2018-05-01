@@ -8,20 +8,18 @@ export default function validateProfileInput(data) {
   data.status = !isEmpty(data.status) ? data.status : '';
   data.skills = !isEmpty(data.skills) ? data.skills : '';
 
-  if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
+  if (Validator.isEmpty(data.handle)) {
+    errors.handle = 'Profile handle is required';
+  } else if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
     errors.handle = 'Handle needs to between 2 and 40 characters';
   }
 
-  if (Validator.isEmpty(data.handle)) {
-    errors.handle = 'Profile handle is required';
-  }
-
   if (Validator.isEmpty(data.status)) {
-    errors.status = 'Status field is required';
+    errors.status = 'Status is required';
   }
 
   if (Validator.isEmpty(data.skills)) {
-    errors.skills = 'Skills field is required';
+    errors.skills = 'Skills are required';
   }
 
   if (!isEmpty(data.website)) {

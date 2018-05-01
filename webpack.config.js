@@ -2,9 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/src/index.js',
+  entry: ['babel-polyfill', './client/src/index.js'],
   output: {
-    path: path.resolve(__dirname, '/dist'),
+    path: path.resolve(__dirname, 'client/build'),
     filename: 'bundle.js',
   },
   plugins: [
@@ -13,6 +13,10 @@ module.exports = {
       template: './client/public/index.html',
     }),
   ],
+  devServer: {
+    publicPath: '/',
+    contentBase: path.join(__dirname, 'client/public'),
+  },
   module: {
     rules: [
       {
