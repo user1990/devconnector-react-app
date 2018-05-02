@@ -53,13 +53,13 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
-} else {
-  app.use(express.static('client/public'));
-
-  app.get('/*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
-  });
 }
+
+app.use(express.static(path.join(__dirname, 'client', 'public')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'));
+});
 
 // Error handling
 app.use((req, res, next) => {
