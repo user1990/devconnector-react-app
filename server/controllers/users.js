@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 import keys from '../config/keys';
-
+import { jwtLoggedUserExpiresIn } from '../config/config';
 // Validation middlewares
 import validateRegisterInput from '../validation/register';
 import validateLoginInput from '../validation/login';
@@ -90,7 +90,9 @@ export const loginUser = async (req, res) => {
     };
 
     // Sign token
-    const token = await jwt.sign(payload, keys.JWT_SECRET, { expiresIn: 3600 });
+    const token = await jwt.sign(payload, keys.JWT_SECRET, {
+      expiresIn: jwtLoggedUserExpiresIn,
+    });
 
     return res.json({ success: true, token: `Bearer ${token}` });
   } catch (err) {

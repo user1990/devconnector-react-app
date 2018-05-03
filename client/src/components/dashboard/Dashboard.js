@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { getCurrentProfile, deleteAccount } from '../../redux/reducers';
 import Spinner from '../common/Spinner';
 import ProfileActions from './ProfileActions';

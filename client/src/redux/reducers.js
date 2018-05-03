@@ -2,7 +2,6 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 import isEmpty from '../validation/isEmpty';
-import { host } from '../config/config';
 
 /***** CONSTANTS *****/
 export const actionTypes = {
@@ -61,7 +60,7 @@ export const loginUser = userCredentials => async dispatch => {
     // Set token to Auth header
     setAuthorizationHeader(token);
 
-    // Decode token to get user data
+    // Decode token to get user credentials
     const decodedUserCredentials = jwt_decode(token);
 
     // Set current user
@@ -72,7 +71,7 @@ export const loginUser = userCredentials => async dispatch => {
 };
 
 // Log user out
-export const logoutUser = () => async dispatch => {
+export const logoutUser = () => dispatch => {
   // Remove token from localStorage
   localStorage.removeItem('jwtToken');
 
@@ -90,22 +89,21 @@ export const setProfileLoading = () => ({
 });
 
 // Get current profile
-export const getCurrentProfile = () => dispatch => {
-  dispatch(setProfileLoading());
-  axios
-    .get(`${host}/api/profile`)
-    .then(res =>
-      dispatch({
-        type: actionTypes.GET_PROFILE,
-        payload: res.data,
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_PROFILE,
-        payload: {},
-      })
-    );
+export const getCurrentProfile = () => async dispatch => {
+  try {
+    dispatch(setProfileLoading());
+    const response = await axios.get('/api/profile');
+    dispatch({
+      type: actionTypes.GET_PROFILE,
+      payload: response.data,
+    });
+  } catch (error) {
+    // dispatch(getErrors(error));
+    dispatch({
+      type: actionTypes.GET_PROFILE,
+      payload: {},
+    });
+  }
 };
 
 // Get current profile
@@ -186,7 +184,7 @@ export const deleteEducation = id => dispatch => {
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get(`${host}/api/profile/all`)
+    .get('/api/profile/all')
     .then(res =>
       dispatch({
         type: actionTypes.GET_PROFILES,
@@ -202,17 +200,17 @@ export const getProfiles = () => dispatch => {
 };
 
 // Delete account & profile
-export const deleteAccount = () => dispatch => {
+export const deleteAccount = () => async dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
-    axios
-      .delete('/api/profile')
-      .then(res => {
-        dispatch({
-          type: actionTypes.SET_CURRENT_USER,
-          payload: {},
-        });
-      })
-      .catch(error => dispatch(getErrors(error)));
+    try {
+      await axios.delete('/api/profile');
+      dispatch({
+        type: actionTypes.SET_CURRENT_USER,
+        payload: {},
+      });
+    } catch (error) {
+      dispatch(getErrors(error));
+    }
   }
 };
 

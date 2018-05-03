@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { logoutUser, clearCurrentProfile } from '../../redux/reducers';
 
 class Navbar extends Component {
-  componentWillMount() {}
-
-  onLogoutClick = e => {
+  handleLogoutUser = e => {
     e.preventDefault();
+
     this.props.clearCurrentProfile();
     this.props.logoutUser();
   };
@@ -30,11 +30,11 @@ class Navbar extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <a href="/" onClick={this.onLogoutClick} className="nav-link">
+          <a href="/" onClick={this.handleLogoutUser} className="nav-link">
             <img
               src={user.avatar}
               alt={user.name}
-              className="navbar-avatar"
+              className="nav-avatar"
               title="You must have a Gravatar connect to you email to display an image"
             />
             Logout
