@@ -20,7 +20,7 @@ import NotFound from '../components/not-found/NotFound';
 
 import PrivateRoute from '../routes/PrivateRoute';
 
-import '../styles/App.scss';
+import '../styles/App.css';
 
 const App = () => (
   <div className="app">
@@ -32,7 +32,7 @@ const App = () => (
       <Route exact path="/profiles" component={Profiles} />
       <Route exact path="/profile/:handle" component={Profile} />
       <Switch>
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
       <Switch>
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />

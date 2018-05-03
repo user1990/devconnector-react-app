@@ -20,8 +20,10 @@ const store = configureStore();
 if (localStorage.jwtToken) {
   // Set auth token header auth
   setAuthorizationHeader(localStorage.jwtToken);
+
   // Decode token and get user info and experience
   const decodedUserData = jwt_decode(localStorage.jwtToken);
+
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decodedUserData));
 
@@ -30,8 +32,10 @@ if (localStorage.jwtToken) {
   if (decodedUserData.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser);
+
     // Clear current Profile
     store.dispatch(clearCurrentProfile);
+
     // Redirect to login
     window.location.href = '/login';
   }

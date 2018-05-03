@@ -2,6 +2,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 import isEmpty from '../validation/isEmpty';
+import { host } from '../config/config';
 
 /***** CONSTANTS *****/
 export const actionTypes = {
@@ -33,9 +34,9 @@ export const getErrors = err => ({
 
 // AUTH
 // Register user
-export const registerUser = (userData, history) => async dispatch => {
+export const registerUser = (userCredentials, history) => async dispatch => {
   try {
-    await axios.post('/api/users/register', userData);
+    await axios.post('/api/users/register', userCredentials);
     history.push('/login');
   } catch (error) {
     dispatch(getErrors(error));
@@ -43,15 +44,15 @@ export const registerUser = (userData, history) => async dispatch => {
 };
 
 // Set Logged in user
-export const setCurrentUser = decodedUserData => ({
+export const setCurrentUser = decodedUserCredentials => ({
   type: actionTypes.SET_CURRENT_USER,
-  payload: decodedUserData,
+  payload: decodedUserCredentials,
 });
 
 // Login - Get User Token
-export const loginUser = userData => async dispatch => {
+export const loginUser = userCredentials => async dispatch => {
   try {
-    const response = await axios.post('/api/users/login', userData);
+    const response = await axios.post('/api/users/login', userCredentials);
     const { token } = response.data;
 
     // Set token in localStorage
@@ -61,10 +62,10 @@ export const loginUser = userData => async dispatch => {
     setAuthorizationHeader(token);
 
     // Decode token to get user data
-    const decodedUserData = jwt_decode(token);
+    const decodedUserCredentials = jwt_decode(token);
 
     // Set current user
-    dispatch(setCurrentUser(decodedUserData));
+    dispatch(setCurrentUser(decodedUserCredentials));
   } catch (error) {
     dispatch(getErrors(error));
   }
@@ -92,7 +93,7 @@ export const setProfileLoading = () => ({
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get('/api/profile')
+    .get(`${host}/api/profile`)
     .then(res =>
       dispatch({
         type: actionTypes.GET_PROFILE,
@@ -185,7 +186,7 @@ export const deleteEducation = id => dispatch => {
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get('/api/profile/all')
+    .get(`${host}/api/profile/all`)
     .then(res =>
       dispatch({
         type: actionTypes.GET_PROFILES,

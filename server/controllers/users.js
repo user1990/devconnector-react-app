@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
-import keys from '../config/keys_dev';
+import keys from '../config/keys';
 
 // Validation middlewares
 import validateRegisterInput from '../validation/register';
@@ -11,6 +11,7 @@ import validateLoginInput from '../validation/login';
 
 export const registerUser = async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
+  // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -57,7 +58,6 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
-
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -72,7 +72,7 @@ export const loginUser = async (req, res) => {
     // Check for user
     if (!user) {
       errors.email = 'Email not found';
-      return res.statusS(404).json(errors);
+      return res.status(404).json(errors);
     }
 
     // Check password
@@ -82,8 +82,7 @@ export const loginUser = async (req, res) => {
       return res.status(404).json(errors);
     }
 
-    // User matched
-    // Create JWT payload
+    // IF User matched, create JWT payload
     const payload = {
       id: user.id,
       name: user.name,

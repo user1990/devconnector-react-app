@@ -31,9 +31,6 @@ class Login extends Component {
   };
 
   onChange = e => {
-    // Remove autocomplete suggestion
-    if (!e.isTrusted) return;
-
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -41,12 +38,12 @@ class Login extends Component {
     e.preventDefault();
 
     const { email, password } = this.state;
-    const userData = {
+    const userCredentials = {
       email,
       password,
     };
 
-    this.props.loginUser(userData);
+    this.props.loginUser(userCredentials);
   };
 
   render() {

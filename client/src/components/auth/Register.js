@@ -23,11 +23,11 @@ class Register extends Component {
     }
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-  }
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -37,14 +37,14 @@ class Register extends Component {
     e.preventDefault();
 
     const { name, email, password, password2 } = this.state;
-    const newUser = {
+    const newUserCredentials = {
       name,
       email,
       password,
       password2,
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerUser(newUserCredentials, this.props.history);
   };
 
   render() {

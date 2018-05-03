@@ -41,10 +41,6 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 
-app.get('/', (req, res) => {
-  res.send('GET request working');
-});
-
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
@@ -54,12 +50,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-app.use(express.static(path.join(__dirname, 'client', 'public')));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'));
-});
 
 // Error handling
 app.use((req, res, next) => {
@@ -77,4 +67,11 @@ app.use((error, req, res) => {
   });
 });
 
-export default app;
+// Application port
+const port = process.env.PORT || 5000;
+
+// Start our server
+app.listen(port);
+console.log('=================================');
+console.log(`Server is running on port ${port}`);
+console.log('=================================');
