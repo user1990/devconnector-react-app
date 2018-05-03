@@ -51,9 +51,6 @@ class Login extends Component {
   render() {
     const { email, password, errors } = this.state;
 
-    const invalidClass = 'form-control form-control-lg is-invalid';
-    const validClass = 'form-control form-control-lg';
-
     return (
       <div className="login">
         <div className="container">
@@ -72,7 +69,6 @@ class Login extends Component {
                   autoComplete="email"
                   onChange={this.onChange}
                   error={errors.email}
-                  className={errors.name ? invalidClass : validClass}
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -82,7 +78,6 @@ class Login extends Component {
                   autoComplete="new-password"
                   onChange={this.onChange}
                   error={errors.password}
-                  className={errors.password ? invalidClass : validClass}
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>

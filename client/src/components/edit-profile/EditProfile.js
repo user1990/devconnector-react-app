@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
@@ -129,11 +130,7 @@ class EditProfile extends Component {
             value={this.state.twitter}
             onChange={this.onChange}
             error={errors.twitter}
-            className={
-              errors.twitter
-                ? 'form-control form-control-lg is-invalid'
-                : 'form-control form-control-lg'
-            }
+            autoComplete="url"
           />
 
           <InputGroup
@@ -143,11 +140,7 @@ class EditProfile extends Component {
             value={this.state.facebook}
             onChange={this.onChange}
             error={errors.facebook}
-            className={
-              errors.facebook
-                ? 'form-control form-control-lg is-invalid'
-                : 'form-control form-control-lg'
-            }
+            autoComplete="url"
           />
 
           <InputGroup
@@ -157,11 +150,7 @@ class EditProfile extends Component {
             value={this.state.linkedin}
             onChange={this.onChange}
             error={errors.linkedin}
-            className={
-              errors.linkedin
-                ? 'form-control form-control-lg is-invalid'
-                : 'form-control form-control-lg'
-            }
+            autoComplete="url"
           />
 
           <InputGroup
@@ -171,11 +160,7 @@ class EditProfile extends Component {
             value={this.state.youtube}
             onChange={this.onChange}
             error={errors.youtube}
-            className={
-              errors.youtube
-                ? 'form-control form-control-lg is-invalid'
-                : 'form-control form-control-lg'
-            }
+            autoComplete="url"
           />
 
           <InputGroup
@@ -185,11 +170,7 @@ class EditProfile extends Component {
             value={this.state.instagram}
             onChange={this.onChange}
             error={errors.instagram}
-            className={
-              errors.instagram
-                ? 'form-control form-control-lg is-invalid'
-                : 'form-control form-control-lg'
-            }
+            autoComplete="url"
           />
         </div>
       );
@@ -226,11 +207,6 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.handle}
                   info="A unique handle for your profile URL. Your full name, company name, nickname"
-                  className={
-                    errors.handle
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <SelectListGroup
                   placeholder="Status"
@@ -240,11 +216,6 @@ class EditProfile extends Component {
                   options={options}
                   error={errors.status}
                   info="Give us an idea of where you are at in your career"
-                  className={
-                    errors.status
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <TextFieldGroup
                   placeholder="Company"
@@ -253,11 +224,7 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.company}
                   info="Could be your own company or one you work for"
-                  className={
-                    errors.company
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
+                  autoComplete="organization"
                 />
                 <TextFieldGroup
                   placeholder="Website"
@@ -266,11 +233,7 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.website}
                   info="Could be your own website or a company one"
-                  className={
-                    errors.website
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
+                  autoComplete="url"
                 />
                 <TextFieldGroup
                   placeholder="Location"
@@ -279,11 +242,6 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.location}
                   info="City or city & state suggested (eg. Boston, MA)"
-                  className={
-                    errors.location
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <TextFieldGroup
                   placeholder="* Skills"
@@ -292,11 +250,6 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.skills}
                   info="Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)"
-                  className={
-                    errors.skills
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <TextFieldGroup
                   placeholder="Github Username"
@@ -305,11 +258,6 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.githubusername}
                   info="If you want your latest repos and a Github link, include your username"
-                  className={
-                    errors.githubusername
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <TextAreaFieldGroup
                   placeholder="Short Bio"
@@ -318,11 +266,6 @@ class EditProfile extends Component {
                   onChange={this.onChange}
                   error={errors.bio}
                   info="Tell us a little about yourself"
-                  className={
-                    errors.bio
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <div className="mb-3">
                   <button

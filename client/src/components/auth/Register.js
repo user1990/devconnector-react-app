@@ -51,9 +51,6 @@ class Register extends Component {
   render() {
     const { name, email, password, password2, errors } = this.state;
 
-    const invalidClass = 'form-control form-control-lg is-invalid';
-    const validClass = 'form-control form-control-lg';
-
     return (
       <div className="register">
         <div className="container">
@@ -72,7 +69,6 @@ class Register extends Component {
                   autoComplete="name"
                   onChange={this.onChange}
                   error={errors.name}
-                  className={errors.name ? invalidClass : validClass}
                 />
                 <TextFieldGroup
                   placeholder="Email Address"
@@ -83,7 +79,6 @@ class Register extends Component {
                   onChange={this.onChange}
                   error={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-                  className={errors.email ? invalidClass : validClass}
                 />
                 <TextFieldGroup
                   placeholder="Password"
@@ -93,7 +88,6 @@ class Register extends Component {
                   autoComplete="new-password"
                   onChange={this.onChange}
                   error={errors.password}
-                  className={errors.password ? invalidClass : validClass}
                 />
                 <TextFieldGroup
                   placeholder="Confirm Password"
@@ -103,7 +97,6 @@ class Register extends Component {
                   autoComplete="new-password"
                   onChange={this.onChange}
                   error={errors.password2}
-                  className={errors.password2 ? invalidClass : validClass}
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>

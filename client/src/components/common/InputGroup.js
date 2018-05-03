@@ -9,7 +9,7 @@ const InputGroup = ({
   error,
   icon,
   onChange,
-  className,
+  autoComplete,
 }) => (
   <div className="input-group mb-3">
     <div className="input-group-prepend">
@@ -18,11 +18,16 @@ const InputGroup = ({
       </span>
     </div>
     <input
-      className={className}
       placeholder={placeholder}
       name={name}
       value={value}
       onChange={onChange}
+      autoComplete={autoComplete}
+      className={
+        error
+          ? 'form-control form-control-lg is-invalid'
+          : 'form-control form-control-lg'
+      }
     />
     {error && <div className="invalid-feedback">{error}</div>}
   </div>
@@ -35,7 +40,11 @@ InputGroup.propTypes = {
   icon: PropTypes.string,
   error: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
+  autoComplete: PropTypes.string,
+};
+
+InputGroup.defaultProps = {
+  autoComplete: 'off',
 };
 
 export default InputGroup;
