@@ -115,6 +115,12 @@ class EditProfile extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  toggleSocialInputs = () => {
+    this.setState(prevState => ({
+      displaySocialInputs: !prevState.displaySocialInputs,
+    }));
+  };
+
   render() {
     const { errors, displaySocialInputs } = this.state;
 
@@ -270,11 +276,7 @@ class EditProfile extends Component {
                 <div className="mb-3">
                   <button
                     type="button"
-                    onClick={() => {
-                      this.setState(prevState => ({
-                        displaySocialInputs: !prevState.displaySocialInputs,
-                      }));
-                    }}
+                    onClick={this.toggleSocialInputs}
                     className="btn btn-light"
                   >
                     Add Social Network Links

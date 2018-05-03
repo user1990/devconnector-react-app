@@ -61,6 +61,12 @@ class CreateProfile extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  toggleSocialInputs = () => {
+    this.setState(prevState => ({
+      displaySocialInputs: !prevState.displaySocialInputs,
+    }));
+  };
+
   render() {
     const { errors, displaySocialInputs } = this.state;
 
@@ -72,7 +78,7 @@ class CreateProfile extends Component {
           <InputGroup
             placeholder="Twitter Profile URL"
             name="twitter"
-            icon="fa fa-twitter"
+            icon="fab fa-twitter"
             value={this.state.twitter}
             onChange={this.onChange}
             error={errors.twitter}
@@ -81,7 +87,7 @@ class CreateProfile extends Component {
           <InputGroup
             placeholder="Facebook Page URL"
             name="facebook"
-            icon="fa fa-facebook"
+            icon="fab fa-facebook"
             value={this.state.facebook}
             onChange={this.onChange}
             error={errors.facebook}
@@ -90,7 +96,7 @@ class CreateProfile extends Component {
           <InputGroup
             placeholder="Linkedin Profile URL"
             name="linkedin"
-            icon="fa fa-linkedin"
+            icon="fab fa-linkedin"
             value={this.state.linkedin}
             onChange={this.onChange}
             error={errors.linkedin}
@@ -99,7 +105,7 @@ class CreateProfile extends Component {
           <InputGroup
             placeholder="YouTube Channel URL"
             name="youtube"
-            icon="fa fa-youtube"
+            icon="fab fa-youtube"
             value={this.state.youtube}
             onChange={this.onChange}
             error={errors.youtube}
@@ -108,7 +114,7 @@ class CreateProfile extends Component {
           <InputGroup
             placeholder="Instagram Page URL"
             name="instagram"
-            icon="fa fa-instagram"
+            icon="fab fa-instagram"
             value={this.state.instagram}
             onChange={this.onChange}
             error={errors.instagram}
@@ -211,11 +217,7 @@ class CreateProfile extends Component {
                 <div className="mb-3">
                   <button
                     type="button"
-                    onClick={() => {
-                      this.setState(prevState => ({
-                        displaySocialInputs: !prevState.displaySocialInputs,
-                      }));
-                    }}
+                    onClick={this.toggleSocialInputs}
                     className="btn btn-light"
                   >
                     Add Social Network Links
