@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+
 import CommentItem from './CommentItem';
 
 const CommentFeed = ({ comments, postId }) =>

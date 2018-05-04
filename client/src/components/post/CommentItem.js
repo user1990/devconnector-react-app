@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { deleteComment } from '../../redux/reducers';
 
 class CommentItem extends Component {
@@ -11,6 +12,17 @@ class CommentItem extends Component {
 
   render() {
     const { comment, postId, auth } = this.props;
+
+    const authUserActions =
+      comment.user === auth.user.id ? (
+        <button
+          onClick={() => this.handleDeleteComment(postId, comment._id)}
+          type="button"
+          className="btn btn-danger mr-1"
+        >
+          <i className="fa fa-times" />
+        </button>
+      ) : null;
 
     return (
       <div className="card card-body mb-3">
@@ -28,15 +40,7 @@ class CommentItem extends Component {
           </div>
           <div className="col-md-10">
             <p className="lead">{comment.text}</p>
-            {comment.user === auth.user.id ? (
-              <button
-                onClick={() => this.handleDeleteComment(postId, comment._id)}
-                type="button"
-                className="btn btn-danger mr-1"
-              >
-                <i className="fa fa-times" />
-              </button>
-            ) : null}
+            {authUserActions}
           </div>
         </div>
       </div>

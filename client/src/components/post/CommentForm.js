@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addComment } from '../../redux/reducers';
 
@@ -11,13 +12,13 @@ class CommentForm extends Component {
     errors: {},
   };
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps = newProps => {
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
     }
-  }
+  };
 
-  onSubmit(e) {
+  onSubmit = e => {
     e.preventDefault();
 
     const { user } = this.props.auth;
@@ -34,11 +35,11 @@ class CommentForm extends Component {
     if (this.state.text.length > 10) {
       this.setState({ text: '' });
     }
-  }
+  };
 
-  onChange(e) {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
   render() {
     const { errors, text } = this.state;

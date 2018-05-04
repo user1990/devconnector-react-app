@@ -3,17 +3,30 @@ import Profile from '../models/Profile';
 // Load validation
 import validatePostInput from '../validation/post';
 
-export const getPostById = (req, res) => {
-  Post.findById(req.params.id)
-    .then(post => res.json(post))
-    .catch(err => res.status(404).json({ err, nopostfound: 'No post found with that ID' }));
+export const getAllPosts = async (req, res) => {
+  const errors = {};
+  try {
+    const posts = await Post.find().sort({ date: -1 });
+    return res.json(posts);
+  } catch (error) {
+    errors.nopost = 'No post found';
+    return res.status(404).json(errors);
+  }
 };
 
-export const getAllPosts = (req, res) => {
-  Post.find()
-    .sort({ date: -1 })
-    .then(posts => res.json(posts))
-    .catch(err => res.status(404).json({ err, nopostfound: 'No posts found' }));
+export const getPostById = async (req, res) => {
+  const errors = {};
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      errors.nopost = `No post found for ${req.params.id}`;
+      return res.status(404).json(errors);
+    }
+    return res.json(post);
+  } catch (error) {
+    errors.nopost = `No post found for ${req.params.id}`;
+    return res.status(404).json(errors);
+  }
 };
 
 export const createPost = async (req, res) => {
@@ -54,10 +67,7 @@ export const likePost = async (req, res) => {
       return res.status(404).json(errors);
     }
 
-    if (
-      post.likes.filter(like => like.user.toString() === req.user.id)
-        .length > 0
-    ) {
+    if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
       errors.alreadyLiked = 'User already liked this post';
       return res.status(400).json(errors);
     }
@@ -90,10 +100,7 @@ export const unlikePost = async (req, res) => {
       return res.status(404).json(errors);
     }
 
-    if (
-      post.likes.filter(like => like.user.toString() === req.user.id)
-        .length === 0
-    ) {
+    if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
       errors.notLiked = 'You have not yest liked this post';
       return res.status(400).json(errors);
     }
@@ -128,7 +135,6 @@ export const addComment = async (req, res) => {
       return res.status(404).json(errors);
     }
 
-    // Add comment to comments array
     const newComment = {
       text: req.body.text,
       name: req.body.name,
@@ -136,6 +142,7 @@ export const addComment = async (req, res) => {
       user: req.user.id,
     };
 
+    // Add comment to comments array
     post.comments.unshift(newComment);
 
     // Save the post
@@ -179,26 +186,35 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const deleteComment = (req, res) => {
-  Profile.findOne({ user: req.user.id }).then((profile) => {
-    Post.findById(req.params.id)
-      .then((post) => {
-        // Check to see if comment exists
-        const { comments } = post;
-        const existingComment = comments.filter(comment => comment._id.toString() === req.params.comment_id);
-        if (existingComment.length === 0) {
-          return res.status(404).json({ commentnotexists: 'Comment does not exist' });
-        }
+export const deleteComment = async (req, res) => {
+  const errors = {};
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      errors.nopost = `No post found for ${req.params.id}`;
+      return res.status(404).json(errors);
+    }
 
-        // Get remove index
-        const removeIndex = comments
-          .map(comment => comment._id.toString())
-          .indexof(req.params.comment_id);
+    // Check to see if comment exists
+    if (
+      post.comments.filter(comment => comment._id.toString() === req.params.commentId).length === 0
+    ) {
+      errors.commentnotexists = 'Comment does not exist';
+      return res.status(404).json(errors);
+    }
 
-        // Splice out of array
-        comments.splice(removeIndex, 1);
-        return post.save().then(post => res.json(post));
-      })
-      .catch(err => res.status(404).json({ err, nopostfound: 'No post found' }));
-  });
+    // Get remove index
+    const removeIndex = post.comments
+      .map(item => item._id.toString())
+      .indexOf(req.params.commentId);
+
+    // Splice comment out of array
+    post.comments.splice(removeIndex, 1);
+
+    await post.save();
+    return res.json(post);
+  } catch (err) {
+    errors.nopost = `No post found for ${req.params.id}`;
+    return res.status(404).json(errors);
+  }
 };

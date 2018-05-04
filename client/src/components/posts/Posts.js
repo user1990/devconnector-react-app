@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import Spinner from '../common/Spinner';
 import PostForm from './PostForm';
 import PostFeed from './PostFeed';
@@ -22,6 +23,7 @@ class Posts extends Component {
     } else {
       postContent = <PostFeed posts={posts} />;
     }
+
     return (
       <div className="feed">
         <div className="container">

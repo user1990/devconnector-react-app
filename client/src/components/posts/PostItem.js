@@ -2,30 +2,32 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
 import { Link } from 'react-router-dom';
+
 import { deletePost, addLike, removeLike } from '../../redux/reducers';
 
 class PostItem extends Component {
-  handleDeleteClick(id) {
+  handleDeletePost = id => {
     this.props.deletePost(id);
-  }
+  };
 
-  handleLikeClick(id) {
+  handleLikePost = id => {
     this.props.addLike(id);
-  }
+  };
 
-  handleUnlikeClick(id) {
+  handleUnlikePost = id => {
     this.props.removeLike(id);
-  }
+  };
 
-  handleFindUserLike(likes) {
+  handleFindUserLike = likes => {
     const { auth } = this.props;
+    // Check IF user is likes array
     if (likes.filter(like => like.user === auth.user.id).length > 0) {
+      // User liked post comment
       return true;
     }
     return false;
-  }
+  };
 
   render() {
     const { post, auth, showActions } = this.props;
@@ -38,7 +40,7 @@ class PostItem extends Component {
               <img
                 className="rounded-circle d-none d-md-block"
                 src={post.avatar}
-                alt=""
+                alt="profile-avatar"
               />
             </a>
             <br />
@@ -49,34 +51,36 @@ class PostItem extends Component {
             {showActions ? (
               <span>
                 <button
-                  onClick={() => this.handleLikeClick(post._id)}
+                  onClick={() => this.handleLikePost(post._id)}
                   type="button"
                   className="btn btn-light mr-1"
                 >
                   <i
-                    className={classnames('fa fa-thumbs-up', {
-                      'text-info': this.handleFindUserLike(post.likes),
-                    })}
+                    className={
+                      this.handleFindUserLike(post.likes)
+                        ? 'fas fa-thumbs-up text-info'
+                        : 'fas fa-thumbs-up'
+                    }
                   />
                   <span className="badge badge-light">{post.likes.length}</span>
                 </button>
                 <button
-                  onClick={() => this.handleUnlikeClick(post._id)}
+                  onClick={() => this.handleUnlikePost(post._id)}
                   type="button"
                   className="btn btn-light mr-1"
                 >
-                  <i className="text-secondary fa fa-thumbs-down" />
+                  <i className="text-secondary fas fa-thumbs-down" />
                 </button>
                 <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
                   Comments
                 </Link>
                 {post.user === auth.user.id ? (
                   <button
-                    onClick={() => this.handleDeleteClick(post._id)}
+                    onClick={() => this.handleDeletePost(post._id)}
                     type="button"
                     className="btn btn-danger mr-1"
                   >
-                    <i className="fa fa-times" />
+                    <i className="fas fa-times" />
                   </button>
                 ) : null}
               </span>
@@ -98,6 +102,7 @@ PostItem.propTypes = {
   removeLike: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  showActions: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
