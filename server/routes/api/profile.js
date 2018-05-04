@@ -55,12 +55,12 @@ router.post('/education', passportJWT, addEducationToProfile);
 // @route   DELETE api/profile/experience/:exp_id
 // @desc    Delete epierence from profile
 // @access  Private
-router.delete('/experience/:exp_id', passportJWT, deleteExperienceFromProfile);
+router.delete('/experience/:id', passportJWT, deleteExperienceFromProfile);
 
 // @route   DELETE api/profile/education/:edu_id
 // @desc    Delete education from profile
 // @access  Private
-router.delete('/education/:edu_id', passportJWT, deleteEducationFromProfile);
+router.delete('/education/:id', passportJWT, deleteEducationFromProfile);
 
 // @route   DELETE api/profile
 // @desc    Delete user and profile

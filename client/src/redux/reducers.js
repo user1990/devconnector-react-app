@@ -26,9 +26,9 @@ export const actionTypes = {
 
 /***** ACTIONS *****/
 // Errors
-export const getErrors = err => ({
+export const getErrors = error => ({
   type: actionTypes.GET_ERRORS,
-  payload: err.response.data,
+  payload: error.response.data,
 });
 
 // AUTH
@@ -155,29 +155,29 @@ export const addEducation = (educationData, history) => async dispatch => {
 };
 
 // Delete Experience
-export const deleteExperience = id => dispatch => {
-  axios
-    .delete(`/api/profile/experience/${id}`)
-    .then(res =>
-      dispatch({
-        type: actionTypes.GET_PROFILE,
-        payload: res.data,
-      })
-    )
-    .catch(error => dispatch(getErrors(error)));
+export const deleteExperience = id => async dispatch => {
+  try {
+    const response = await axios.delete(`/api/profile/experience/${id}`);
+    dispatch({
+      type: actionTypes.GET_PROFILE,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Delete Education
-export const deleteEducation = id => dispatch => {
-  axios
-    .delete(`/api/profile/education/${id}`)
-    .then(res =>
-      dispatch({
-        type: actionTypes.GET_PROFILE,
-        payload: res.data,
-      })
-    )
-    .catch(error => dispatch(getErrors(error)));
+export const deleteEducation = id => async dispatch => {
+  try {
+    const response = await axios.delete(`/api/profile/education/${id}`);
+    dispatch({
+      type: actionTypes.GET_PROFILE,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Get all profiles

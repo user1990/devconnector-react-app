@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
+
 import { deleteEducation } from '../../redux/reducers';
 
 class Education extends Component {
@@ -11,30 +12,29 @@ class Education extends Component {
   };
 
   render() {
-    const education =
-      this.props.education &&
-      this.props.education.map(edu => (
-        <tr key={edu._id}>
-          <td>{edu.school}</td>
-          <td>{edu.degree}</td>
-          <td>
-            <Moment format="YYYY/MM/DD">{edu.from}</Moment> -
-            {edu.to === null ? (
-              ' Now'
-            ) : (
-              <Moment format="YYYY/MM/DD">{edu.to}</Moment>
-            )}
-          </td>
-          <td>
-            <button
-              className="btn btn-danger"
-              onClick={() => this.handleDeleteEducation(edu._id)}
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ));
+    const education = this.props.education && this.props.education;
+    const educationTable = education.map(edu => (
+      <tr key={edu._id}>
+        <td>{edu.school}</td>
+        <td>{edu.degree}</td>
+        <td>
+          <Moment format="YYYY/MM/DD">{edu.from}</Moment> -
+          {edu.to === null ? (
+            ' Now'
+          ) : (
+            <Moment format="YYYY/MM/DD">{edu.to}</Moment>
+          )}
+        </td>
+        <td>
+          <button
+            className="btn btn-danger"
+            onClick={() => this.handleDeleteEducation(edu._id)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
 
     return (
       <div>
@@ -46,7 +46,7 @@ class Education extends Component {
               <th>Degree</th>
               <th>Years</th>
             </tr>
-            {education}
+            {educationTable}
           </thead>
         </table>
       </div>
