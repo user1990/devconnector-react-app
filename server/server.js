@@ -1,13 +1,13 @@
-import logger from 'morgan';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import passport from 'passport';
-import path from 'path';
-import keys from './config/keys';
-// Routes import
-import users from './routes/api/users';
-import profile from './routes/api/profile';
-import posts from './routes/api/posts';
+const logger = require('morgan');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const path = require('path');
+const keys = require('./config/keys');
+// Routes
+const users = require('./routes/api/users');
+const profile = require('./routes/api/profile');
+const posts = require('./routes/api/posts');
 
 const express = require('express');
 
