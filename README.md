@@ -31,13 +31,19 @@ Go to project direction
 Install dependencies
 
 ```bash
-$ npm install
+$ npm i
+$ npm run client-install
 ```
 
-Installing using yarn
+Create server/config/keys_dev.js file
+
+Add your MongoDb URL & JWT secret
 
 ```bash
-$ yarn install
+export default {
+  MONGO_URI: 'YOUR_MONGODB_URL',
+  JWT_SECRET: 'SOME_RANDOM_STRING',
+};
 ```
 
 Run app
