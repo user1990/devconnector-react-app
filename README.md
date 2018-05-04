@@ -46,6 +46,15 @@ export default {
 };
 ```
 
+For Github profile add client/config/keys.js file
+
+```bash
+export default {
+  githubClientId: 'YOUR_GITHUB_CLIENT_ID',
+  githubClientSecret: 'YOUR_GITHUB_CLIENT_SECRET',
+};
+```
+
 Run app
 
 ```bash
