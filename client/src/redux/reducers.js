@@ -107,30 +107,26 @@ export const getCurrentProfile = () => async dispatch => {
 };
 
 // Get current profile
-export const getProfileByHandle = handle => dispatch => {
-  dispatch(setProfileLoading());
-  axios
-    .get(`/api/profile/handle/${handle}`)
-    .then(res =>
-      dispatch({
-        type: actionTypes.GET_PROFILE,
-        payload: res.data,
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_PROFILE,
-        payload: null,
-      })
-    );
+export const getProfileByHandle = handle => async dispatch => {
+  try {
+    dispatch(setProfileLoading());
+
+    const response = await axios.get(`/api/profile/handle/${handle}`);
+    dispatch({ type: actionTypes.GET_PROFILE, payload: response.data });
+  } catch (error) {
+    // dispatch({ type: GET_ERRORS, payload: error.response.data })
+    dispatch({ type: actionTypes.GET_PROFILE, payload: null });
+  }
 };
 
 // Create Profile
-export const createProfile = (profileData, history) => dispatch => {
-  axios
-    .post('/api/profile', profileData)
-    .then(res => history.push('/dashboard'))
-    .catch(error => dispatch(getErrors(error)));
+export const createProfile = (profileData, history) => async dispatch => {
+  try {
+    await axios.post('/api/profile', profileData);
+    history.push('/dashboard');
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Clear profile
@@ -139,19 +135,23 @@ export const clearCurrentProfile = () => ({
 });
 
 // Add experience
-export const addExperience = (expData, history) => dispatch => {
-  axios
-    .post('/api/profile/experience', expData)
-    .then(res => history.push('/dashboard'))
-    .catch(error => dispatch(getErrors(error)));
+export const addExperience = (experienceData, history) => async dispatch => {
+  try {
+    await axios.post('/api/profile/experience', experienceData);
+    history.push('/dashboard');
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Add education
-export const addEducation = (eduData, history) => dispatch => {
-  axios
-    .post('/api/profile/education', eduData)
-    .then(res => history.push('/dashboard'))
-    .catch(error => dispatch(getErrors(error)));
+export const addEducation = (educationData, history) => async dispatch => {
+  try {
+    await axios.post('/api/profile/education', educationData);
+    history.push('/dashboard');
+  } catch (error) {
+    dispatch(getErrors(error));
+  }
 };
 
 // Delete Experience

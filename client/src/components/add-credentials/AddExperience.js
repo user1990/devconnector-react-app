@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addExperience } from '../../redux/reducers';
@@ -29,7 +30,7 @@ class AddExperience extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const expData = {
+    const experienceData = {
       company: this.state.company,
       title: this.state.title,
       location: this.state.location,
@@ -39,7 +40,7 @@ class AddExperience extends Component {
       description: this.state.description,
     };
 
-    this.props.addExperience(expData, this.props.history);
+    this.props.addExperience(experienceData, this.props.history);
   };
 
   onChange = e => {
@@ -54,7 +55,17 @@ class AddExperience extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const {
+      errors,
+      disabled,
+      company,
+      title,
+      location,
+      from,
+      to,
+      current,
+      description,
+    } = this.state;
 
     return (
       <div className="add-experience">
@@ -73,73 +84,48 @@ class AddExperience extends Component {
                 <TextFieldGroup
                   placeholder="* Company"
                   name="company"
-                  value={this.state.company}
+                  value={company}
                   onChange={this.onChange}
                   error={errors.company}
-                  className={
-                    errors.company
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <TextFieldGroup
                   placeholder="* Job Title"
                   name="title"
-                  value={this.state.title}
+                  value={title}
                   onChange={this.onChange}
                   error={errors.title}
-                  className={
-                    errors.title
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <TextFieldGroup
                   placeholder="Location"
                   name="location"
-                  value={this.state.location}
+                  value={location}
                   onChange={this.onChange}
                   error={errors.location}
-                  className={
-                    errors.location
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <h6>From Date</h6>
                 <TextFieldGroup
                   name="from"
                   type="date"
-                  value={this.state.from}
+                  value={from}
                   onChange={this.onChange}
                   error={errors.from}
-                  className={
-                    errors.from
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <h6>To Date</h6>
                 <TextFieldGroup
                   name="to"
                   type="date"
-                  value={this.state.to}
+                  value={to}
                   onChange={this.onChange}
                   error={errors.to}
-                  disabled={this.state.disabled ? 'disabled' : ''}
-                  className={
-                    errors.to
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
+                  disabled={disabled ? 'disabled' : ''}
                 />
                 <div className="form-check mb-4">
                   <input
                     type="checkbox"
                     className="form-check-input"
                     name="current"
-                    value={this.state.current}
-                    checked={this.state.current}
+                    value={current}
+                    checked={current}
                     onChange={this.onCheck}
                     id="current"
                   />
@@ -150,15 +136,10 @@ class AddExperience extends Component {
                 <TextAreaFieldGroup
                   placeholder="Job Description"
                   name="description"
-                  value={this.state.description}
+                  value={description}
                   onChange={this.onChange}
                   error={errors.description}
                   info="Tell us about the position"
-                  className={
-                    errors.description
-                      ? 'form-control form-control-lg is-invalid'
-                      : 'form-control form-control-lg'
-                  }
                 />
                 <input
                   type="submit"

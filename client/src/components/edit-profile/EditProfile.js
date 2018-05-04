@@ -39,9 +39,9 @@ class EditProfile extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.profile.profile) {
-      const { profile } = nextProps.profile;
-
+    // Fill state fields with values
+    const { profile } = nextProps.profile;
+    if (profile) {
       // Bring skills array back to CSV
       const skillsCSV = profile.skills.join(',');
 
@@ -138,7 +138,6 @@ class EditProfile extends Component {
             error={errors.twitter}
             autoComplete="url"
           />
-
           <InputGroup
             placeholder="Facebook Page URL"
             name="facebook"
@@ -148,7 +147,6 @@ class EditProfile extends Component {
             error={errors.facebook}
             autoComplete="url"
           />
-
           <InputGroup
             placeholder="Linkedin Profile URL"
             name="linkedin"
@@ -158,7 +156,6 @@ class EditProfile extends Component {
             error={errors.linkedin}
             autoComplete="url"
           />
-
           <InputGroup
             placeholder="YouTube Channel URL"
             name="youtube"
@@ -168,7 +165,6 @@ class EditProfile extends Component {
             error={errors.youtube}
             autoComplete="url"
           />
-
           <InputGroup
             placeholder="Instagram Page URL"
             name="instagram"
