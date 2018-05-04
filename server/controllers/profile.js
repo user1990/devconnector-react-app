@@ -106,7 +106,7 @@ export const createUserProfile = async (req, res) => {
 
     // Skills
     if (typeof req.body.skills !== 'undefined') {
-      profileFields.skills = req.body.skills.split(',');
+      profileFields.skills = req.body.skills.split(',').map(skill => skill.trim());
     }
 
     // Social
