@@ -2,6 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import isEmpty from '../../validation/isEmpty';
 
 const ProfileItem = ({ profile }) => (
@@ -27,6 +28,7 @@ const ProfileItem = ({ profile }) => (
         <h4>Skill Set</h4>
         <ul className="list-group">
           {profile.skills.slice(0, 4).map((skill, index) => (
+            /* eslint-disable-next-line */
             <li key={index} className="list-group-item">
               <i className="fa fa-check pr-1" />
               {skill}

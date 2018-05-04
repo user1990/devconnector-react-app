@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 
-const ProfileCreds = ({ experience, education }) => {
-  const expItems = experience.map(exp => (
+const ProfileCredentials = ({ experience, education }) => {
+  const experienceItems = experience.map(exp => (
     <li key={exp._id} className="list-group-item">
       <h4>{exp.company}</h4>
       <p>
@@ -35,7 +35,7 @@ const ProfileCreds = ({ experience, education }) => {
     </li>
   ));
 
-  const eduItems = education.map(edu => (
+  const educationItems = education.map(edu => (
     <li key={edu._id} className="list-group-item">
       <h4>{edu.school}</h4>
       <p>
@@ -66,8 +66,8 @@ const ProfileCreds = ({ experience, education }) => {
     <div className="row">
       <div className="col-md-6">
         <h3 className="text-center text-info">Experience</h3>
-        {expItems.length > 0 ? (
-          <ul className="list-group">{expItems}</ul>
+        {experienceItems.length > 0 ? (
+          <ul className="list-group">{experienceItems}</ul>
         ) : (
           <p className="text-center">No Experience Listed</p>
         )}
@@ -75,8 +75,8 @@ const ProfileCreds = ({ experience, education }) => {
 
       <div className="col-md-6">
         <h3 className="text-center text-info">Education</h3>
-        {eduItems.length > 0 ? (
-          <ul className="list-group">{eduItems}</ul>
+        {educationItems.length > 0 ? (
+          <ul className="list-group">{educationItems}</ul>
         ) : (
           <p className="text-center">No Education Listed</p>
         )}
@@ -85,9 +85,9 @@ const ProfileCreds = ({ experience, education }) => {
   );
 };
 
-ProfileCreds.propTypes = {
+ProfileCredentials.propTypes = {
   experience: PropTypes.array.isRequired,
   education: PropTypes.array.isRequired,
 };
 
-export default ProfileCreds;
+export default ProfileCredentials;

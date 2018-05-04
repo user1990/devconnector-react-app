@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getProfileByHandle } from '../../redux/reducers';
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
-import ProfileCreds from './ProfileCreds';
+import ProfileCredentials from './ProfileCredentials';
+import ProfileGithub from './ProfileGithub';
 import Spinner from '../common/Spinner';
+import { getProfileByHandle } from '../../redux/reducers';
 
 class Profile extends Component {
   componentDidMount = () => {
@@ -44,10 +45,13 @@ class Profile extends Component {
             <div className="col-md-6">
               <ProfileHeader profile={profile} />
               <ProfileAbout profile={profile} />
-              <ProfileCreds
+              <ProfileCredentials
                 education={profile.education}
                 experience={profile.experience}
               />
+              {profile.githubusername && (
+                <ProfileGithub username={profile.githubusername} />
+              )}
             </div>
           </div>
         </div>

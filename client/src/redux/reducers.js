@@ -93,20 +93,14 @@ export const getCurrentProfile = () => async dispatch => {
   try {
     dispatch(setProfileLoading());
     const response = await axios.get('/api/profile');
-    dispatch({
-      type: actionTypes.GET_PROFILE,
-      payload: response.data,
-    });
+    dispatch({ type: actionTypes.GET_PROFILE, payload: response.data });
   } catch (error) {
     // dispatch(getErrors(error));
-    dispatch({
-      type: actionTypes.GET_PROFILE,
-      payload: {},
-    });
+    dispatch({ type: actionTypes.GET_PROFILE, payload: {} });
   }
 };
 
-// Get current profile
+// Get current profile by handle
 export const getProfileByHandle = handle => async dispatch => {
   try {
     dispatch(setProfileLoading());
@@ -116,6 +110,17 @@ export const getProfileByHandle = handle => async dispatch => {
   } catch (error) {
     // dispatch({ type: GET_ERRORS, payload: error.response.data })
     dispatch({ type: actionTypes.GET_PROFILE, payload: null });
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async dispatch => {
+  try {
+    dispatch(setProfileLoading());
+    const response = await axios.get('/api/profile/all');
+    dispatch({ type: actionTypes.GET_PROFILES, payload: response.data });
+  } catch (error) {
+    dispatch({ type: actionTypes.GET_PROFILES, payload: {} });
   }
 };
 
@@ -158,10 +163,7 @@ export const addEducation = (educationData, history) => async dispatch => {
 export const deleteExperience = id => async dispatch => {
   try {
     const response = await axios.delete(`/api/profile/experience/${id}`);
-    dispatch({
-      type: actionTypes.GET_PROFILE,
-      payload: response.data,
-    });
+    dispatch({ type: actionTypes.GET_PROFILE, payload: response.data });
   } catch (error) {
     dispatch(getErrors(error));
   }
@@ -171,32 +173,10 @@ export const deleteExperience = id => async dispatch => {
 export const deleteEducation = id => async dispatch => {
   try {
     const response = await axios.delete(`/api/profile/education/${id}`);
-    dispatch({
-      type: actionTypes.GET_PROFILE,
-      payload: response.data,
-    });
+    dispatch({ type: actionTypes.GET_PROFILE, payload: response.data });
   } catch (error) {
     dispatch(getErrors(error));
   }
-};
-
-// Get all profiles
-export const getProfiles = () => dispatch => {
-  dispatch(setProfileLoading());
-  axios
-    .get('/api/profile/all')
-    .then(res =>
-      dispatch({
-        type: actionTypes.GET_PROFILES,
-        payload: res.data,
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: actionTypes.GET_PROFILES,
-        payload: null,
-      })
-    );
 };
 
 // Delete account & profile
@@ -204,10 +184,7 @@ export const deleteAccount = () => async dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     try {
       await axios.delete('/api/profile');
-      dispatch({
-        type: actionTypes.SET_CURRENT_USER,
-        payload: {},
-      });
+      dispatch({ type: actionTypes.SET_CURRENT_USER, payload: {} });
     } catch (error) {
       dispatch(getErrors(error));
     }

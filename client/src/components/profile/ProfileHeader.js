@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+
 import isEmpty from '../../validation/isEmpty';
 
 const ProfileHeader = ({ profile }) => (
@@ -28,7 +29,7 @@ const ProfileHeader = ({ profile }) => (
                 href={profile.website}
                 target="_blank"
               >
-                <i className="fa fa-globe fa-2x" />
+                <i className="fas fa-globe fa-2x" />
               </a>
             )}
 
@@ -38,7 +39,7 @@ const ProfileHeader = ({ profile }) => (
                 href={profile.social.twitter}
                 target="_blank"
               >
-                <i className="fa fa-twitter fa-2x" />
+                <i className="fab fa-twitter fa-2x" />
               </a>
             )}
 
@@ -48,7 +49,7 @@ const ProfileHeader = ({ profile }) => (
                 href={profile.social.facebook}
                 target="_blank"
               >
-                <i className="fa fa-facebook fa-2x" />
+                <i className="fab fa-facebook fa-2x" />
               </a>
             )}
 
@@ -58,7 +59,7 @@ const ProfileHeader = ({ profile }) => (
                 href={profile.social.linkedin}
                 target="_blank"
               >
-                <i className="fa fa-linkedin fa-2x" />
+                <i className="fab fa-linkedin fa-2x" />
               </a>
             )}
 
@@ -68,7 +69,7 @@ const ProfileHeader = ({ profile }) => (
                 href={profile.social.youtube}
                 target="_blank"
               >
-                <i className="fa fa-youtube fa-2x" />
+                <i className="fab fa-youtube fa-2x" />
               </a>
             )}
 
@@ -78,7 +79,7 @@ const ProfileHeader = ({ profile }) => (
                 href={profile.social.instagram}
                 target="_blank"
               >
-                <i className="fa fa-instagram fa-2x" />
+                <i className="fab fa-instagram fa-2x" />
               </a>
             )}
           </p>

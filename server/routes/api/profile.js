@@ -30,7 +30,7 @@ router.get('/handle/:handle', getProfileByHandle);
 // @route   GET api/profile/user/:user
 // @desc    Get profile by user ID
 // @access  Public
-router.get('/user/:user_id', getProfileById);
+router.get('/user/:userId', getProfileById);
 
 // @route   GET api/profile/all
 // @desc    Get all profiles

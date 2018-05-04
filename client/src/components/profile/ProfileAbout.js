@@ -1,15 +1,14 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+
 import isEmpty from '../../validation/isEmpty';
 
 const ProfileAbout = ({ profile }) => {
-  // Get first name
-  //const firstName = profile.user.name.trim().spli(' ')[0];
-  const firstName = profile.handle;
+  const firstName = profile.user.name.trim().split(' ')[0];
 
-  // Skill List
-  const skills = profile.skills.map((skill, index) => (
+  const skillsList = profile.skills.map((skill, index) => (
+    /* eslint-disable-next-line */
     <div key={index} className="p-3">
       <i className="fa fa-check" /> {skill}
     </div>
@@ -31,7 +30,7 @@ const ProfileAbout = ({ profile }) => {
           <h3 className="text-center text-info">Skill Set</h3>
           <div className="row">
             <div className="d-flex flex-wrap justify-content-center align-items-center">
-              {skills}
+              {skillsList}
             </div>
           </div>
         </div>
