@@ -73,7 +73,7 @@ export const likePost = async (req, res) => {
     }
 
     // Add user id to likes array
-    post.likes.unshift({ user: req.user.id });
+    post.likes = [{ user: req.user.id }].concat(post.likes);
 
     // Save the post
     post = await post.save();
