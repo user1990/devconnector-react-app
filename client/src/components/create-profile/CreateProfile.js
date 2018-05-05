@@ -241,7 +241,6 @@ class CreateProfile extends Component {
 
 CreateProfile.propTypes = {
   history: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   createProfile: PropTypes.func.isRequired,
 };
 

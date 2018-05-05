@@ -157,7 +157,6 @@ class AddEducation extends Component {
 
 AddEducation.propTypes = {
   addEducation: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
 

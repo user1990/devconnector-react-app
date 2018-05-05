@@ -295,11 +295,9 @@ class EditProfile extends Component {
 }
 
 EditProfile.propTypes = {
-  profile: PropTypes.object.isRequired,
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
