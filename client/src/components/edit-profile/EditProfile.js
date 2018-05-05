@@ -12,29 +12,7 @@ import { createProfile, getCurrentProfile } from '../../redux/reducers';
 import isEmpty from '../../validation/isEmpty';
 
 class EditProfile extends Component {
-  state = {
-    displaySocialInputs: false,
-    handle: '',
-    company: '',
-    website: '',
-    location: '',
-    status: '',
-    skills: '',
-    githubusername: '',
-    bio: '',
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    youtube: '',
-    instagram: '',
-    errors: {},
-  };
-
-  componentDidMount = () => {
-    this.props.getCurrentProfile();
-  };
-
-  componentWillReceiveProps = nextProps => {
+  static getDerivedStateFromProps = nextProps => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -87,6 +65,28 @@ class EditProfile extends Component {
         instagram: profile.instagram,
       });
     }
+  };
+
+  state = {
+    displaySocialInputs: false,
+    handle: '',
+    company: '',
+    website: '',
+    location: '',
+    status: '',
+    skills: '',
+    githubusername: '',
+    bio: '',
+    twitter: '',
+    facebook: '',
+    linkedin: '',
+    youtube: '',
+    instagram: '',
+    errors: {},
+  };
+
+  componentDidMount = () => {
+    this.props.getCurrentProfile();
   };
 
   onSubmit = e => {

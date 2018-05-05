@@ -11,6 +11,12 @@ import InputGroup from '../common/InputGroup';
 import { createProfile } from '../../redux/reducers';
 
 class CreateProfile extends Component {
+  static getDerivedStateFromProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   state = {
     displaySocialInputs: false,
     handle: '',
@@ -27,12 +33,6 @@ class CreateProfile extends Component {
     youtube: '',
     instagram: '',
     errors: {},
-  };
-
-  componentWillReceiveProps = nextProps => {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   };
 
   onSubmit = e => {

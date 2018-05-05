@@ -9,6 +9,12 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addEducation } from '../../redux/reducers';
 
 class AddEducation extends Component {
+  static getDerivedStateFromProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   state = {
     school: '',
     degree: '',
@@ -20,12 +26,6 @@ class AddEducation extends Component {
     errors: {},
     disabled: false,
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
 
   onSubmit = e => {
     e.preventDefault();

@@ -7,15 +7,15 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addPost } from '../../redux/reducers';
 
 class PostForm extends Component {
+  static getDerivedStateFromProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   state = {
     text: '',
     errors: {},
-  };
-
-  componentWillReceiveProps = newProps => {
-    if (newProps.errors) {
-      this.setState({ errors: newProps.errors });
-    }
   };
 
   onSubmit = e => {
