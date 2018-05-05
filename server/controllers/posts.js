@@ -205,8 +205,13 @@ export const deleteComment = async (req, res) => {
 
     // Get remove index
     const removeIndex = post.comments
-      .map(item => item._id.toString())
+      .map(comment => comment._id.toString())
       .indexOf(req.params.commentId);
+
+    //Make sure only the comment owner can delete comment
+    if (req.user.id !== post.comments[removeIndex].user.toString()) {
+      return res.status(401).json({ notauthorized: "User not authorized" });
+    }
 
     // Splice comment out of array
     post.comments.splice(removeIndex, 1);
