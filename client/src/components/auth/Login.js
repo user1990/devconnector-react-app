@@ -6,18 +6,6 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../redux/reducers';
 import TextFieldGroup from '../common/TextFieldGroup';
 
-import signale from 'signale';
-
-signale.success('Operation successful');
-signale.debug('Hello', 'from', 'L59');
-signale.pending('Write release notes for 1.2.0');
-signale.fatal(new Error('Unable to acquire lock'));
-signale.watch('Recursively watching build directory...');
-signale.complete({
-  prefix: '[task]',
-  message: 'Fix issue #59',
-  suffix: '(@klauscfhq)',
-});
 class Login extends Component {
   state = {
     email: '',
