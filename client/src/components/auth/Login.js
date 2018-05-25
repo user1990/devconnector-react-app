@@ -7,6 +7,17 @@ import { loginUser } from '../../redux/reducers';
 import TextFieldGroup from '../common/TextFieldGroup';
 
 class Login extends Component {
+  static getDerivedStateFromProps = nextProps => {
+    // Check IF user is authenticated
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   state = {
     email: '',
     password: '',
@@ -18,17 +29,6 @@ class Login extends Component {
     const isAuth = this.props.auth.isAuthenticated;
     if (isAuth) {
       this.props.history.push('/dashboard');
-    }
-  };
-
-  componentWillReceiveProps = nextProps => {
-    // Check IF user is authenticated
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
     }
   };
 
@@ -91,7 +91,6 @@ class Login extends Component {
 
 Login.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,

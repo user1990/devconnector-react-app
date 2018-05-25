@@ -12,18 +12,18 @@ import Spinner from '../common/Spinner';
 import { getProfileByHandle } from '../../redux/reducers';
 
 class Profile extends Component {
-  componentDidMount = () => {
-    const { handle } = this.props.match.params;
-    if (handle) {
-      this.props.getProfileByHandle(handle);
-    }
-  };
-
-  componentWillReceiveProps = nextProps => {
+  static getDerivedStateFromProps = nextProps => {
     const { profile } = nextProps.profile;
     const { loading } = this.props.profile;
     if (profile === null && loading) {
       this.props.history.push('/not-found');
+    }
+  };
+
+  componentDidMount = () => {
+    const { handle } = this.props.match.params;
+    if (handle) {
+      this.props.getProfileByHandle(handle);
     }
   };
 

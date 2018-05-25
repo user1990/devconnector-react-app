@@ -9,6 +9,12 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { addExperience } from '../../redux/reducers';
 
 class AddExperience extends Component {
+  static getDerivedStateFromProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   state = {
     company: '',
     title: '',
@@ -19,12 +25,6 @@ class AddExperience extends Component {
     description: '',
     errors: {},
     disabled: false,
-  };
-
-  componentWillReceiveProps = nextProps => {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   };
 
   onSubmit = e => {
@@ -156,7 +156,6 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
-  errors: PropTypes.object.isRequired,
   addExperience: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };

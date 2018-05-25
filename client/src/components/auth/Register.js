@@ -8,6 +8,12 @@ import { registerUser } from '../../redux/reducers';
 import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends Component {
+  static getDerivedStateFromProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
+
   state = {
     name: '',
     email: '',
@@ -21,12 +27,6 @@ class Register extends Component {
     const isAuth = this.props.auth.isAuthenticated;
     if (isAuth) {
       this.props.history.push('/dashboard');
-    }
-  };
-
-  componentWillReceiveProps = nextProps => {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
     }
   };
 
@@ -110,7 +110,6 @@ class Register extends Component {
 
 Register.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   registerUser: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };

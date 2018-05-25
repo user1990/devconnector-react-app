@@ -77,9 +77,11 @@ export const getAllProfiles = async (req, res) => {
       return res.json(profiles);
     }
 
-    errors.noprofile = 'There are no profiles';
-
-    return res.status(404).json(errors);
+    // Check IF profiles doesn't exist
+    if (!profiles || profiles.length === 0) {
+      errors.noprofile = "There are no profiles";
+      res.status(404).json(errors);
+    }
   } catch (err) {
     return res.status(404).json(err);
   }
